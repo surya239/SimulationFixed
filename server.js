@@ -21,37 +21,6 @@ app.use(express.json())
 const PORT = process.env.PORT || 5000;
 
 
-
-
-app.post('/sign',async(req,res) => {
-    try {
-        let r;
-        const { fname, uname, email, pass } = req.body;
-        const hashPass = await bcrypt.hash(pass,10)
-        const signup = await pool.query("INSERT INTO signup(fname, uname, email, pass) values($1, $2, $3, $4)", [fname, uname, email, hashPass] );
-        jwt.sign({
-            fname,
-            uname,
-            email
-        }, 
-        process.env.JWT_SECRET,
-        {
-            expiresIn: '2d',
-        },
-        (err, token) => {
-            if(err){
-                return res.status(500).send(err)
-            }
-            r = {token}
-           res.status(200).json({token})
-        }
-        )
-    } catch (err) {
-        console.log(err)
-        res.status(202).json('Username or email already exist')
-    }
-} )
-
 app.post('/api/login', async(req,res) =>{
     try {
         const {uname, pass} = req.body;
