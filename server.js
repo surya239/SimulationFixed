@@ -20,79 +20,8 @@ app.use(express.json())
 
 const PORT = process.env.PORT || 5000;
 
-const getAccessandBearerToken = ( { accessToken }) => `https://www.googleapis.com/oauth2/v1/userinfo?alt=json&access_token=${accessToken}`;
 
-const getGoogleUser = async ({code}) => {
-    const { tokens } = await oauthClient.getToken(code);
-    const response = await axios.get(
-        getAccessandBearerToken({ accessToken: tokens.access_token}),
-        { headers: {Authorization: `Bearer ${tokens.id_token}`}},
-    );
-    return response.data;
-}
 
-const updateOrCreate = async({ oauthUserInfo}) => {
-    try {
-        const uname = oauthUserInfo.email.split('@')[0];
-        let get;
-        const check = await pool.query("SELECT email FROM signup WHERE email = $1 ",[oauthUserInfo.email])
-        if(check.rowCount === 0){
-            try {
-                const insert = await pool.query("Insert Into signup(uname, fname, email) VALUES ($1, $2, $3) ",[uname,oauthUserInfo.name, oauthUserInfo.email])
-                const getvalue = await pool.query("SELECT * FROM signup WHERE uname=$1",[uname]);
-                get = getvalue.rows;
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        else{
-            try {
-                const getvalue = await pool.query("SELECT * FROM signup WHERE uname = $1",[uname]);
-                get= getvalue.rows
-            } catch (err) {
-                console.log(err)
-            }
-        }
-    return get;
-    } catch (err) {
-        console.log(err)
-    }
-}
-
-app.get('/auth/google/callback',async (req,res) => {
-    const {code} = req.query;
-    const oauthUserInfo = await getGoogleUser({ code });
-    const updatedUser = await updateOrCreate({oauthUserInfo});
-    if(updatedUser !== undefined){
-        const{uname, fname, who, email} = updatedUser[0];
-        jwt.sign({
-            uname, 
-            fname,
-            email,
-            who
-        },
-        process.env.JWT_SECRET,
-        {
-            expiresIn: '7d'
-        },
-        (err, token) => {
-            if(err) return res.sendStatus(500);
-            res.redirect(`/login?token=${token}`)
-        }
-        )
-    }
-})
-
-const googleOauthCallbackRoute = {
-    path: '/auth/google/callback',
-    method: 'get',
-    handler: async (req,res) => {
-        const {code} = req.query;
-        const oauthUserInfo = await getGoogleUser({ code });
-        const updatedUser = await updateOrCreate({oauthUserInfo});
-        res.sendStatus(404)
-    }
-}
 
 app.post('/sign',async(req,res) => {
     try {
