@@ -11,13 +11,13 @@ import Loding from './Pages/Loding'
 import PostJob from './Pages/PostJob';
 import EditProfile from './Pages/EditProfile';
 import ViewApplication from './Pages/ViewApplicants';
-import Home from './Pages/Home';
+import Dashboard from './Pages/Dashboard';
 function App() {
   return (
     <>
       <Router>
         <Switch>
-          <Route path="/" exact><Home /></Route>
+          <Route path="/" exact><Dashboard /></Route>
           <Route path='/signup'> <Signup /> </Route>
           <Route path='/login'> <Login /> </Route>
           <PrivateRoute path='/profileUpdation/:uname' ><Profile /></PrivateRoute>
