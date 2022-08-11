@@ -29,17 +29,17 @@ const handleBlur = async e => {
     const coloumn = e.target.name
     const value = e.target.value
     console.log(coloumn, value)
-    try {
-        const response = axios.post("http://localhost:5000/wbs",{coloumn, value})
-        const data = (await response).data
-        setState({
-            ...state,
-            ['total']:parseInt(data)
-        })
-        SetChangeState(changeState + 1)
-    } catch (error) {
-        console.log(error)
-    }
+    // try {
+    //     const response = axios.post("http://localhost:5000/wbs",{coloumn, value})
+    //     const data = (await response).data
+    //     setState({
+    //         ...state,
+    //         ['total']:parseInt(data)
+    //     })
+    //     SetChangeState(changeState + 1)
+    // } catch (error) {
+    //     console.log(error)
+    // }
 }
 const defalut = async() =>{
     try {
@@ -79,9 +79,9 @@ const getValues = async() => {
 
 
 
-useEffect(() => {
-getValues()
-},[])
+// useEffect(() => {
+// getValues()
+// },[])
 return(
     <>
         {/* <BidPrice name={changeState} /> */}
