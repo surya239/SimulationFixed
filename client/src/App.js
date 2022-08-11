@@ -18,17 +18,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact><Dashboard /></Route>
-          <Route path='/signup'> <Signup /> </Route>
-          <Route path='/login'> <Login /> </Route>
-          <PrivateRoute path='/profileUpdation/:uname' ><Profile /></PrivateRoute>
-          <PrivateRoute path='/studentProfileUpdation/Student/:uname' ><UpdateStudent /></PrivateRoute>
-          <PrivateRoute path='/account/:who/:uname'  ><StudentDashboard /></PrivateRoute>
-          <PrivateRoute path='/:categories/account/:who/:uname'  ><StudentDashboard /></PrivateRoute>
-          <PrivateRoute path='/recruiterAccount/:uname'><Alumini /></PrivateRoute>
-          <PrivateRoute path='/post/recruiterAccount/:uname'><PostJob /></PrivateRoute>
-          <PrivateRoute path='/loading'><Loding /></PrivateRoute>
-          <PrivateRoute path='/viewApplicants/recruiterAccount/:uname/:id_no/:job_name'><ViewApplication /></PrivateRoute>
-          <PrivateRoute path='/EditProfile/Student/:uname'><EditProfile /></PrivateRoute>
+          
         </Switch>
       </Router>
     </>
