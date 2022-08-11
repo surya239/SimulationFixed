@@ -1,6 +1,6 @@
 import React, { useState } from "react"
 import Select from 'react-select'
-
+import Render from "./Render"
 
 function Dashboard(){
 const options = [{
@@ -42,6 +42,9 @@ const change = (a) =>{
                         <li><button onClick={() => change('Profit')}>Profit</button></li>
                         <li><button onClick={() => change('Summary')} >Summary</button></li>
                     </ul>
+                </div>
+                <div>
+                    <Render name = {page} />
                 </div>
               
             </div>
