@@ -59,6 +59,18 @@ app.get('/tablevalues/:table/:userEmail', async(req,res) => {
     }
 })
 
+app.get('/adjust/:email', async(req, res) => {
+    try {
+        console.log(req.params)
+        const result1 = await pool.query("SELECT * FROM adjust")
+        const result2 = await pool.query("SELECT * from effort where useremail = $1",['abc@gmail.com'])
+        const result = [result1.rows, result2.rows]
+        res.json(result).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
 } )
