@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import WBS from './WBS'
 import Effort from './Effort'
-// import Productivity from './Productivity'
+import Productivity from './Productivity'
 // import Resource from './Resource'
 // import ResourceCost from'./ResourceCost';
 // import Project from './Project'
@@ -29,14 +29,14 @@ function Render(params){
         return(
             <>
                 <Effort />
-                {/* <Productivity /> */}
+                <Productivity />
             </>
         )
     }
 
-    // else if(page === 'Productivity'){
-    //     return <Productivity />
-    // }
+    else if(page === 'Productivity'){
+        return <Productivity />
+    }
 
     // else if(page === 'Resources'){
     //     return <Resource />
