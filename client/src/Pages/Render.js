@@ -2,7 +2,7 @@ import React,{useState} from 'react'
 import WBS from './WBS'
 import Effort from './Effort'
 import Productivity from './Productivity'
-// import Resource from './Resource'
+import Resource from './Resource'
 // import ResourceCost from'./ResourceCost';
 // import Project from './Project'
 // import Subcontract from './Subcontract'
@@ -38,9 +38,9 @@ function Render(params){
         return <Productivity />
     }
 
-    // else if(page === 'Resources'){
-    //     return <Resource />
-    // }
+    else if(page === 'Resources'){
+        return <Resource />
+    }
 
     // else if(page === 'ResourceCost'){
     //     return <ResourceCost />

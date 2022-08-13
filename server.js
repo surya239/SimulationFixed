@@ -129,6 +129,408 @@ app.get('/productivity/:name/:email', async(req, res) => {
     }
 })
 
+app.get("/getresource/:email", async(req, res) => {
+    try {
+        const result = await pool.query("SELECT * FROM resourceValues")
+        const lifeCycle = await pool.query("SELECT lifecycle from resource")
+        const resource = await pool.query("SELECT * FROM resource")
+        let Month = {
+            resource:'',
+            design:'',
+            coding:'',
+            testing:'',
+            deployment:'',
+            total:'',
+        }
+        
+            if(lifeCycle.rows[0].lifecycle === '20,20,20,20,20'){
+                Month = {
+                    resource:20,
+                    design:20,
+                    coding:20,
+                    testing:20,
+                    deployment:20,
+                    
+                }
+            }
+            else if(lifeCycle.rows[0].lifecycle === '10,15,40,25,10'){
+                Month = {
+                    resource:10,
+                    design:15,
+                    coding:40,
+                    testing:25,
+                    deployment:15,
+                
+                }
+            }
+            else{
+                Month = {
+                    resource:5,
+                    design:30,
+                    coding:30,
+                    testing:30,
+                    deployment:5,
+                }            
+        }
+        Month.total = Month.coding + Month.deployment + Month.design +Month.resource + Month.testing
+        const query = await pool.query("UPDATE resource SET requirement = $1, design = $2, coding = $3, testing = $4, deployment = $5, total = $6",[Month.resource, Month.design, Month.coding, Month.testing, Month.deployment, Month.total])
+
+        res.json([result.rows, Month, resource.rows]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/changeresource', async(req, res) => {
+    try {
+        const {table, value} = req.body
+        const result = await pool.query(`UPDATE resource SET ${table} = $1 `,[value])
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get("/resource/:complex/:simple/:set", async(req, res) => {
+    try {
+        const {complex, simple, set} = req.params
+        const complexValue = await pool.query(`SELECT effortperunit from ${complex}`)
+        const simpleValue = await pool.query(`SELECT effortperunit from ${simple}`)
+        const cvalue = complexValue.rows[0].effortperunit
+        const svalue = simpleValue.rows[0].effortperunit
+        const result = await pool.query("SELECT * FROM resource")
+        const value = (svalue + cvalue) / (result.rows[0].workingday * result.rows[0].phperday)
+        const query = await pool.query(`SELECT requirement, design, coding, testing, deployment from resource`)
+        const Resource = {
+            requirement: value * (query.rows[0].requirement/ 100),
+            design: value * (query.rows[0].design / 100),
+            coding: value * (query.rows[0].coding / 100),
+            testing: value * (query.rows[0].testing / 100),
+            deployment: value * (query.rows[0].deployment / 100),
+            total:0
+        }
+        Resource.total = Resource.coding + Resource.deployment + Resource.design + Resource.requirement + Resource.testing 
+            const r = await pool.query(`UPDATE ${set} SET requirement = $1, design = $2, coding = $3, testing = $4, deployment = $5, total = $6`,[Resource.requirement,Resource.design, Resource.coding, Resource.testing, Resource.deployment, Resource.total])
+            
+
+        
+        
+        res.json([value, Resource]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/milestoneresource/:name',async(req, res) => {
+    try {
+        const {name} = req.params
+        const screen = await pool.query(`SELECT ${name} from screen `)
+        const database = await pool.query(`SELECT ${name} from database `)
+        const api= await pool.query(`SELECT ${name} from api `)
+        const report = await pool.query(`SELECT ${name} from report`)
+        const result = [screen.rows[0], database.rows[0], api.rows[0], report.rows[0]]
+        let sum = 0;
+        for(let i = 0; i<result.length; i++){
+            sum += result[i][name]
+        }
+        await pool.query(`UPDATE mresource SET ${name} = $1`, [sum])
+        res.json(sum).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get("/resourcecostvalues" , async(req, res) => {
+    try {
+        const result = await pool.query("SELECT * from resourcecost")
+
+        res.json([L,x,y, result.rows]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post("/changeresourcecost", async(req, res) => {
+    try {
+        const {coloumn, label} = req.body
+
+        if(coloumn === 'pvst'){
+            const value = label.split('-')
+            console.log(value)
+            const result = await pool.query("UPDATE resourcecost SET permenent = $1, temporaryload = $2",[value[0], value[1]])
+        }
+        else{
+            await pool.query(`UPDATE resourcecost SET  ${coloumn} = $1 `, [label])
+        }
+        console.log(coloumn, label)
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get("/getresourcecost/:name/:load", async(req, res) => {
+    try {
+        const {name, load} = req.params
+        console.log(name, load)
+        const resource = await pool.query(`SELECT ${name} from mresource`)
+        const loadValue = await pool.query(`SELECT ${load} from resourcecost`)
+        const result = resource.rows[0][name] * (loadValue.rows[0][load] / 100)
+        console.log(result)
+        res.json(result).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+app.get("/gettotalresource/:name", async(req, res) => {
+    try {
+        const {name} = req.params
+        const resource = await pool.query("SELECT * from resourcecost")
+        const value = await pool.query(`SELECT ${name} from mresource`)
+        console.log(resource.rows)
+        const result = Math.round(((value.rows[0][name] * (resource.rows[0]['permenent'] / 100) )* resource.rows[0]['parmenentsalary']) + ((value.rows[0][name] * (resource.rows[0]['temporaryload'] / 100) * resource.rows[0]['temporarysalary'])))
+        await pool.query(`UPDATE totalresource SET ${name} = $1`, [result])
+        console.log(result)
+        res.json(result).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+app.get("/gettotalresourcecost", async(req, res) => {
+    try {
+        const resource = await pool.query("SELECT * FROM totalresource")
+        const total = resource.rows[0]['requirement'] + resource.rows[0]['design'] +resource.rows[0]['coding'] + resource.rows[0]['deployment'] + resource.rows[0]['testing']
+        res.json(total).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+const Heuristic = [2,4,6,8,10,12,14,15]
+const onshareOffshareRatio = ['1-5', '1-7', '1-10', '1-12']
+const onSiteSalary = [4000, 4200, 4400]
+
+app.get("/getproject", async(req, res) => {
+    try {
+        const result = await pool.query("SELECT * FROM projectmanagement")
+        console.log(result.rows)
+        const ratio = String(result.rows[0]['teamleader'])+'-'+String(result.rows[0]['teamemberatio'])
+        // console.log(ratio)
+        let noOfTeamMembers = 0
+        if(ratio === '1-10'){
+            noOfTeamMembers = 10
+        }
+        else if(ratio === '1-5'){
+            noOfTeamMembers = 5
+        }
+        else if(ratio = '1-7'){
+            noOfTeamMembers=7
+        }
+        else if(ratio ='1-12'){
+            noOfTeamMembers = 12
+        }
+        else{
+            noOfTeamMembers = 0
+        }
+        const teamratio = String(result.rows[0]['projectmanager'])+'-'+String(result.rows[0]['teamleadratio'])
+        let noOfTeamLeadsCount = 0
+        if(teamratio === '1-10'){
+            noOfTeamLeadsCount = 10
+        }
+        else if(teamratio === '1-5'){
+            noOfTeamLeadsCount = 5
+        }
+        else if(teamratio = '1-7'){
+            noOfTeamLeadsCount=7
+        }
+        else if(teamratio ='1-12'){
+            noOfTeamLeadsCount = 12
+        }
+        else{
+            noOfTeamLeadsCount = 0
+        }
+        const resource = await pool.query(`SELECT * from mresource`)
+        // console.log(resource.rows)
+        const maxValue = Math.max(resource.rows[0]['requirement'], resource.rows[0]['design'], resource.rows[0]['coding'], resource.rows[0]['testing'], resource.rows[0]['deployment'])
+        console.log(maxValue)
+        const noOfTeamLeads = maxValue / noOfTeamMembers
+        
+        const costOfMonths = Math.round(projectDuration * noOfTeamLeads * result.rows[0]['teamleadsalary'])
+        const noOfManager = noOfTeamLeads / noOfTeamLeadsCount
+        const projectManagerCost = Math.round(projectDuration * noOfManager * result.rows[0]['pmsalary'])
+        const totalresource = await pool.query("SELECT * FROM totalresource")
+        const total = totalresource.rows[0]['requirement'] + totalresource.rows[0]['design'] + totalresource.rows[0]['coding'] + totalresource.rows[0]['deployment'] + totalresource.rows[0]['testing']
+        res.json([
+            teamRatio,
+            ratio, 
+            noOfTeamMembers, 
+            noOfTeamLeads, 
+            costOfMonths,
+            teamLeadSalary, 
+            result.rows[0]['teamleadsalary'], 
+            noOfTeamLeadsCount, 
+            teamLeadRatio,
+            noOfManager,
+            projectManagerCost,
+            teamratio, 
+            pmSalary,
+            result.rows[0]['pmsalary'], 
+            Heuristic,
+            result.rows[0]['heuristic'],
+            total * result.rows[0]['heuristic'] / 100,
+            onshareOffshareRatio,
+            String(result.rows[0]['onsite'])+'-'+String(result.rows[0]['offshore']),
+            result.rows[0]['offshore'], 
+            maxValue,
+            onSiteSalary,
+            result.rows[0]['onsitesalary'],
+            result.rows[0]['onsitesalary']* projectDuration
+        ]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/getsubcontract/:name', async(req, res) => {
+    try {
+        const {name} = req.params
+        const result = await pool.query(`SELECT sub1,sub2,sub3 from ${name}`)
+        // const {sub1, sub2, sub3} = result.rows[0]
+        // console.log(sub1, sub2, sub3)
+        res.json([result.rows[0]]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/getsubcontraccost/:name', async(req, res) => {
+    try {
+        const {name} = req.params
+        const permenent = await pool.query("SELECT parmenentsalary from resourcecost")
+        const mresource = await pool.query(`SELECT design from mresource`)
+        const subContract = await pool.query(`SELECT sub1, sub2, sub3 from ${name}`)
+        const result = [
+        Math.round(permenent.rows[0]['parmenentsalary'] * mresource.rows[0]['design'] * (1+(subContract.rows[0]['sub1'] / 100))),
+        Math.round(permenent.rows[0]['parmenentsalary'] * mresource.rows[0]['design'] * (1+(subContract.rows[0]['sub2'] / 100))),
+        Math.round(permenent.rows[0]['parmenentsalary'] * mresource.rows[0]['design'] * (1+(subContract.rows[0]['sub3'] / 100)))
+    ]
+     res.json(result).status(200)   
+    } catch (error) {
+        console.log(error)
+        res.sendStatus(500)
+    }
+})
+const selectSubCon = ['none', 'subCon - 1', 'subCon - 2', 'subCon - 3']
+app.get("/selectsubcon", async(req, res) => {
+    try {
+        const coding = await pool.query("SELECT subcontractor from coding")
+        const design = await pool.query("SELECT subcontractor from design")
+        const testing = await pool.query("SELECT subcontractor from testing")
+        const deployment = await pool.query("SELECT subcontractor from deployment")
+        
+        res.json([
+            selectSubCon,
+            design.rows[0]['subcontractor'],
+            coding.rows[0]['subcontractor'],
+            testing.rows[0]['subcontractor'],
+            deployment.rows[0]['subcontractor']
+          ]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get('/getriskrating/:name', async(req, res) => {
+    try {
+        const {name} = req.params
+        const sub = await pool.query(`SELECT Subcontractor from ${name}`)
+        // console.log(sub.rows[0]['subcontractor'])
+        let risk = ''
+        let cost = 0
+        let resourcecost = 0
+        let total = 0
+        if(sub.rows[0]['subcontractor'] === 'None' || sub.rows[0]['subcontractor'] === 'none'){
+            risk = 'None'
+            cost = 0
+            const Rcost = await pool.query(`SELECT ${name} from totalresource`)
+            const mresource = await pool.query(`SELECT ${name} from mresource`)
+            resourcecost = Rcost.rows[0][name]
+            total = mresource.rows[0][name]
+        }
+        else{
+            const Risk = await pool.query(`SELECT ${sub.rows[0]['subcontractor']} FROM riskrating`)
+            risk = Risk.rows[0][sub.rows[0]['subcontractor']]
+            const permenent = await pool.query("SELECT parmenentsalary from resourcecost")
+        const mresource = await pool.query(`SELECT design from mresource`)
+        const subContract = await pool.query(`SELECT ${sub.rows[0]['subcontractor']} from ${name}`)
+        // console.log(subContract.rows[0][sub.rows[0]['subcontractor']] , mresource.rows[0][name])
+        const result =  Math.round(permenent.rows[0]['parmenentsalary'] * mresource.rows[0]['design'] * (1+(subContract.rows[0][sub.rows[0]['subcontractor']] / 100)))
+        cost = result
+    
+        }
+        await pool.query(`UPDATE ${name} SET cost = $1, rcost = $2, total = $3`, [cost, resourcecost, total])
+        
+        res.json([
+            risk, 
+            cost,
+            resourcecost,
+            total
+        ]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+const Infra = [500, 600, 700]
+const costOfCapital = [7, 8, 9, 10,12,14,18,22]
+app.get("/getinfra", async(req, res) => {
+    try {
+        const cost = await pool.query("SELECT cost from infra")
+        res.json([Infra, cost.rows[0]['cost'], costOfCapital]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.get("/getcostofcapital", async(req, res) => {
+    try {
+        res.json([costOfCapital]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+const contigency = {
+    Insignificant: 0.25,
+    Minor: 0.5,
+    Significant: 1,
+    Major:2,
+    Catastrophic:5,
+    None:0
+}
+
+const contigencyPercentage = ['Insignificant', 'Minor','Significant' ,'Major', 'Catastrophic', 'None']
+
+app.get('/contigency/:name', async(req, res) => {
+    try {
+        const {name} = req.params
+        const value = await pool.query(`SELECT riskrating FROM ${name}`)
+        res.json([contigencyPercentage, value.rows[0]['riskrating']]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+const overHead = [2,3,4]
+const expectedProfit = [5, 10, 15, 20, 25,30,35]
+
+app.get('/summary', async(req, res) => {
+    try {
+        res.json([overHead, expectedProfit]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
 } )

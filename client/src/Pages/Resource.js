@@ -12,8 +12,8 @@ function Resource(){
     const [state, setState] = useState(1)
     const [requirement, setRequirement] = useState({})
     const [changeLifeCycle,setChangeLifeCycle] = useState('')
-    const [changeWM, setChangeWM] = useState('')
-    const [changeWH, setChangeWH] = useState('')
+    const [changeWM, setChangeWM] = useState(0)
+    const [changeWH, setChangeWH] = useState(0)
     const setData = async(data, req) =>{
         let L = []
         let WM = []
@@ -22,8 +22,8 @@ function Resource(){
         for(let i =0; i<data.length; i++){
            L[i] = {
             id:i,
-            label:data[i].lifcycle,
-            value:data[i].lifcycle
+            label:data[i].lifecycle,
+            value:data[i].lifecycle
         }
         WM[i] = {
             id:i,
@@ -37,6 +37,7 @@ function Resource(){
         }
         }
         setLifeCycle(L)
+        console.log(data)
         setWPM(WM)
         setWPH(WH)
     }
@@ -83,16 +84,16 @@ function Resource(){
             </div>
             <div>
                 <h4>Select Life Cycle Effort Distribution</h4>
-                {lifeCycle.length === 0?null:<Select options={lifeCycle} defaultValue={{id:4, label:changeLifeCycle, value:changeLifeCycle}} onChange = {e => change(e, 'lifecycle')} />}
+                {changeLifeCycle.length === 0?null:<Select options={lifeCycle} defaultValue={{id:4, label:changeLifeCycle, value:changeLifeCycle}} onChange = {e => change(e, 'lifecycle')} />}
             </div>
             <div>
                 <h4>Working days per Months </h4>
-                {WPH.length === 0 ? null:<Select options={WPH} defaultValue={{id:4, label:changeWM, value:changeWM}} onChange={e => change(e,'workingday')} />}
+                {changeWM === 0 ? null:<Select options={WPH} defaultValue={{id:4, label:changeWM, value:changeWM}} onChange={e => change(e,'workingday')} />}
 
             </div>
             <div>
                 <h4>Productive  hours per day</h4>
-                {WPM.length === 0 ?null:<Select options={WPM} defaultValue={{id:4, label:changeWH, value:changeWH}} onChange= {e => change(e,'phperday')}/>}
+                {changeWH === 0 ?null:<Select options={WPM} defaultValue={{id:4, label:changeWH, value:changeWH}} onChange= {e => change(e,'phperday')}/>}
             </div>
             <table>
                 <thead>
