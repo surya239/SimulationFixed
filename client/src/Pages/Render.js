@@ -3,8 +3,8 @@ import WBS from './WBS'
 import Effort from './Effort'
 import Productivity from './Productivity'
 import Resource from './Resource'
-// import ResourceCost from'./ResourceCost';
-// import Project from './Project'
+import ResourceCost from'./ResourceCost';
+import Project from './Project'
 // import Subcontract from './Subcontract'
 // import Infra from './Infra'
 // import CostofCapital from './CostofCapital'
@@ -42,12 +42,12 @@ function Render(params){
         return <Resource />
     }
 
-    // else if(page === 'ResourceCost'){
-    //     return <ResourceCost />
-    // }
-    // else if(page === 'Project'){
-    //     return <Project />
-    // }
+    else if(page === 'ResourceCost'){
+        return <ResourceCost />
+    }
+    else if(page === 'Project'){
+        return <Project />
+    }
     // else if(page === 'subContract'){
     //     return <Subcontract />
     // }

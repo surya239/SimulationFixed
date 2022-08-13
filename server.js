@@ -10,7 +10,14 @@ import axios from 'axios';
 import bcrypt from 'bcrypt';
 import {google} from 'googleapis'
 app.use(cors());
-
+let L = ['100-0', '80-20', '70-30', '50-50', '30-70', '20-80'];
+let x = [1800, 1900, 2000]
+let y = [1200, 1300, 1400]
+const teamRatio = ['1-5', '1-7', '1-10', '1-12']
+const teamLeadSalary = [2500, 2600, 2700]
+const projectDuration = 5
+const teamLeadRatio = ['1-5', '1-7', '1-10', '1-12']
+const pmSalary = [3500, 3600, 3700]
 const __dirname = path.resolve();
 app.use(express.static(path.join(__dirname,"client/build")))
 
@@ -288,7 +295,7 @@ app.get("/gettotalresource/:name", async(req, res) => {
         const resource = await pool.query("SELECT * from resourcecost")
         const value = await pool.query(`SELECT ${name} from mresource`)
         console.log(resource.rows)
-        const result = Math.round(((value.rows[0][name] * (resource.rows[0]['permenent'] / 100) )* resource.rows[0]['parmenentsalary']) + ((value.rows[0][name] * (resource.rows[0]['temporaryload'] / 100) * resource.rows[0]['temporarysalary'])))
+        const result = Math.round(((value.rows[0][name] * (resource.rows[0]['permenent'] / 100) )* resource.rows[0]['permenentsalary']) + ((value.rows[0][name] * (resource.rows[0]['temporaryload'] / 100) * resource.rows[0]['temporarysalary'])))
         await pool.query(`UPDATE totalresource SET ${name} = $1`, [result])
         console.log(result)
         res.json(result).status(200)
@@ -314,19 +321,19 @@ app.get("/getproject", async(req, res) => {
     try {
         const result = await pool.query("SELECT * FROM projectmanagement")
         console.log(result.rows)
-        const ratio = String(result.rows[0]['teamleader'])+'-'+String(result.rows[0]['teamemberatio'])
+        const ratio = String(result.rows[0]['teamleader'])+'-'+String(result.rows[0]['teamemberratio'])
         // console.log(ratio)
-        let noOfTeamMembers = 0
+        var noOfTeamMembers = 0
         if(ratio === '1-10'){
             noOfTeamMembers = 10
         }
         else if(ratio === '1-5'){
             noOfTeamMembers = 5
         }
-        else if(ratio = '1-7'){
+        else if(ratio ==='1-7'){
             noOfTeamMembers=7
         }
-        else if(ratio ='1-12'){
+        else if(ratio ==='1-12'){
             noOfTeamMembers = 12
         }
         else{
@@ -340,10 +347,10 @@ app.get("/getproject", async(req, res) => {
         else if(teamratio === '1-5'){
             noOfTeamLeadsCount = 5
         }
-        else if(teamratio = '1-7'){
+        else if(teamratio === '1-7'){
             noOfTeamLeadsCount=7
         }
-        else if(teamratio ='1-12'){
+        else if(teamratio === '1-12'){
             noOfTeamLeadsCount = 12
         }
         else{
