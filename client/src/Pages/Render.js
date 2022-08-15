@@ -5,7 +5,7 @@ import Productivity from './Productivity'
 import Resource from './Resource'
 import ResourceCost from'./ResourceCost';
 import Project from './Project'
-// import Subcontract from './Subcontract'
+import Subcontract from './Subcontract'
 // import Infra from './Infra'
 // import CostofCapital from './CostofCapital'
 // import SelectContigency from './SelectContigency'
@@ -48,9 +48,9 @@ function Render(params){
     else if(page === 'Project'){
         return <Project />
     }
-    // else if(page === 'subContract'){
-    //     return <Subcontract />
-    // }
+    else if(page === 'subContract'){
+        return <Subcontract />
+    }
     // else if(page === 'Infra'){
     //     return <Infra />
     // }

@@ -1,6 +1,6 @@
 import React,{useState, useEffect} from "react"
 import axios from "axios"
-// import BidPrice from "./BidPrice"
+import BidPrice from "./BidPrice"
 function WBS(){
     const [changeState, SetChangeState] = useState(0)
     const [state, setState] = useState({
@@ -84,7 +84,7 @@ getValues()
 },[])
 return(
     <>
-        {/* <BidPrice name={changeState} /> */}
+        <BidPrice name={changeState} />
         <form>
                         Quantity Adjust<br></br>
                         Deliverable Type Estimate Quality<br/>
