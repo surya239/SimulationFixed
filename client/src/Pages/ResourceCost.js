@@ -17,7 +17,7 @@ function ResourceCost(){
     const [tload, setTload] = useState('')
     const getValues = async() => {
         try {
-            const response = axios.get("http://localhost:5000/resourcecostvalues")
+            const response = axios.get("/resourcecostvalues")
             const pvsl = (await response).data[0]
             const psalary = (await response).data[1]
             const tsalary = (await response).data[2]
