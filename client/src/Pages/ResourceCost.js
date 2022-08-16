@@ -56,7 +56,7 @@ function ResourceCost(){
                 setPload(value[0])
                 setTload(value[1])
             }
-            const response = axios.post("http://localhost:5000/changeresourcecost",{coloumn, label})
+            const response = axios.post("/changeresourcecost",{coloumn, label})
             setChangeState(changeState+1)
         } catch (error) {
             console.log(error)

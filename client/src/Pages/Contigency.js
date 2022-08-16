@@ -9,7 +9,7 @@ function Contigency(params){
     const [inhouse, setInhouse] = useState(0)
     const getValues = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/contigency/${name}`)
+            const response = axios.get(`/contigency/${name}`)
             let data = []
             for(var i = 0; i<(await response).data[0].length; i++){
                 data[i]={

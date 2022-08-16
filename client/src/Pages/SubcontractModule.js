@@ -6,7 +6,7 @@ function SubcontractModule(params){
     const [value, setValue] = useState([])
     const getValues = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/getsubcontraccost/${name}`)
+            const response = axios.get(`/getsubcontraccost/${name}`)
             const data = (await response).data
             setValue(data)
         

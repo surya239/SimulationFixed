@@ -7,7 +7,7 @@ function Infra(){
     const [defaultValue, setDefaultValue] = useState(0)
     const getValues = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/getinfra`)
+            const response = axios.get(`/getinfra`)
             let data = []
             for(let i =0; i< (await response).data[0].length ; i++){
                 data[i] = {

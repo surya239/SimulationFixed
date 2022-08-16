@@ -12,7 +12,7 @@ function SelectProductivity(params){
     const change = async(e) => {
         try {
             const label = e.label
-            const response = axios.post(`http://localhost:5000/changeproductivity/${name}`,{label})
+            const response = axios.post(`/changeproductivity/${name}`,{label})
             console.log((await response).data)
             setState(state+1)
         } catch (error) {
@@ -21,7 +21,7 @@ function SelectProductivity(params){
     }
     const getValues = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/productivity/${name}/${'abc@gmail.com'}`)
+            const response = axios.get(`/productivity/${name}/${'abc@gmail.com'}`)
             const data = (await response).data[0]
             setDefaultValue((await response).data[1])
             setOption([{

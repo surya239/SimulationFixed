@@ -6,7 +6,7 @@ function Pvst(params){
     const {name, load} =  params
     const getValues = async() => {
         try {
-            const result = axios.get(`http://localhost:5000/getresourcecost/${name}/${load}`)
+            const result = axios.get(`/getresourcecost/${name}/${load}`)
             const data = (await result).data
             setValue(data)
         } catch (error) {

@@ -30,7 +30,7 @@ function Project(){
     const [onsiteCost, setOnsiteCost] = useState(0)
     const getValues = async() => {
         try {
-            const result = axios.get(`http://localhost:5000/getproject`)
+            const result = axios.get(`/getproject`)
             console.log((await result).data)
             const data = (await result).data[0]
             let dataArray = []

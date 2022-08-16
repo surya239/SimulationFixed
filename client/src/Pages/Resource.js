@@ -67,7 +67,7 @@ function Resource(){
             setChangeWH(label)
         }
         try {
-            const response = axios.post("http://localhost:5000/changeresource",{table:table, value:label})
+            const response = axios.post("/changeresource",{table:table, value:label})
             setChangeState(changestate + 1)
         } catch (error) {
             console.log(error)

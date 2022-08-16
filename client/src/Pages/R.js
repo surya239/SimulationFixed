@@ -7,7 +7,7 @@ function R(params){
     const [total, setTotal] = useState(0)
     const getValues = async() => {
         try {
-            const result = axios.get(`http://localhost:5000/milestoneresource/${name}`)
+            const result = axios.get(`/milestoneresource/${name}`)
             const data = (await result).data
             setTotal(data)
             console.log((await result).data)

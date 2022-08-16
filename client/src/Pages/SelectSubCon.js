@@ -12,7 +12,7 @@ function SelectSubCon(){
     const [defaultDeployment, setDefaultDeployment] = useState('')
     const getValues = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/selectsubcon`)
+            const response = axios.get(`/selectsubcon`)
             const data = (await response).data[0]
             let dataArray = []
             for(var i =0; i<data.length; i++){

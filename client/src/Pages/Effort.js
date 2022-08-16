@@ -7,7 +7,7 @@ function Effort(){
     const [d, setDefaultValue] = useState(0)
     const getValue = async() => {
         try {
-            const result = axios.get(`http://localhost:5000/adjust/${'abc'}`)
+            const result = axios.get(`/adjust/${'abc'}`)
             const data = (await result).data[0]
             const percentage = (await result).data[1]
             let dataArray = []

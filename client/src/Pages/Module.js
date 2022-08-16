@@ -9,7 +9,7 @@ function Module(params) {
             
             const complex = 'complex'+params.type
             const simple = 'simple'+params.type
-            const response = axios.get(`http://localhost:5000/resource/${complex}/${simple}/${params.type}`)
+            const response = axios.get(`/resource/${complex}/${simple}/${params.type}`)
             const data = (await response).data[0]
             const Resource = (await response).data[1]
             setModelResource(data)

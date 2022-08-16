@@ -4,7 +4,7 @@ function GettotalResource(){
     const [total, setTotal] = useState(0)
     const getValues = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/gettotalresourcecost`)
+            const response = axios.get(`/gettotalresourcecost`)
             setTotal((await response).data)
         } catch (error) {
             console.log(error)
