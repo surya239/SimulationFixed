@@ -4,7 +4,7 @@ import Select from 'react-select'
 import Pvst from "./Pvst";
 import TotalResource from "./TotalResource";
 import GettotalResource from "./GettotalResource";
-// import BidPrice from "./BidPrice";
+import BidPrice from "./BidPrice";
 function ResourceCost(){
     const [changeState, setChangeState] = useState(0)
     const [pvslOption, setPvslOption] = useState([])
@@ -67,7 +67,7 @@ function ResourceCost(){
     }, [changeState])
     return(
         <>
-        {/* <BidPrice name={changeState} /> */}
+        <BidPrice name={changeState} />
             <div>
                 <h4>Permanent VS Temporary Load</h4>
                 {defaultpvst === ''? null :<Select options={pvslOption} onChange={(e) => change(e, 'pvst')} defaultValue={{id: 7, label: defaultpvst, value:defaultpvst}}/>}

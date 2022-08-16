@@ -9,12 +9,17 @@ import Subcontract from './Subcontract'
 // import Infra from './Infra'
 // import CostofCapital from './CostofCapital'
 // import SelectContigency from './SelectContigency'
-// import BidPrice from './BidPrice'
+import BidPrice from './BidPrice'
 // import Summary from './Summary'
 function Render(params){
     const page = params.name
     if(page === ''){
-        return <h1>Dash Board</h1>
+        return (<>
+        <BidPrice />
+        <h1>Dash Board</h1>
+
+        </>
+        )
     }
 
     if(page === 'WBS'){
@@ -35,7 +40,12 @@ function Render(params){
     }
 
     else if(page === 'Productivity'){
-        return <Productivity />
+        return (
+            <>
+            <BidPrice />
+            <Productivity />
+            </>
+        )
     }
 
     else if(page === 'Resources'){

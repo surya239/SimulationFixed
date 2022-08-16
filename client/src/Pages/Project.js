@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from "react";
 import axios from "axios";
 import Select from 'react-select'
-// import BidPrice from "./BidPrice";
+import BidPrice from "./BidPrice";
 
 function Project(){
     const [teamRatio, setTeamRatio] = useState([])
@@ -95,7 +95,7 @@ function Project(){
     }, [])
     return(
         <>
-        {/* <BidPrice /> */}
+        <BidPrice />
             <h3>Project Management</h3>
             <div>
                 <table>

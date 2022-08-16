@@ -3,7 +3,7 @@ import axios from "axios";
 import Select from "react-select";
 import Module from './Module'
 import R from "./R";
-// import BidPrice from "./BidPrice";
+import BidPrice from "./BidPrice";
 function Resource(){
     const [changestate, setChangeState] = useState(0)
     const [lifeCycle, setLifeCycle] = useState([])
@@ -78,7 +78,7 @@ function Resource(){
     },[changeLifeCycle])
     return(
         <>
-        {/* <BidPrice name={changestate} /> */}
+        <BidPrice name={changestate} />
             <div>
                 <h1>Calculate Resources</h1>
             </div>

@@ -2,10 +2,12 @@ import React from "react";
 import SubModule from "./SubModule";
 import SubcontractModule from "./SubcontractModule";
 import SelectSubCon from "./SelectSubCon";
+import BidPrice from "./BidPrice";
 function Subcontract(){
     return(
         <>
             {/* <h1>Hello</h1> */}
+            <BidPrice />
             <table>
                 <tbody>
                     <tr>

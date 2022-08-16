@@ -1,7 +1,7 @@
 import Recat,{useState,useEffect} from 'react';
 import Select from 'react-select'
 import axios from 'axios';
-
+import BidPrice from './BidPrice';
 function Effort(){
     const [option, setOption] = useState([])
     const [d, setDefaultValue] = useState(0)
@@ -45,6 +45,7 @@ function Effort(){
 
     return(
         <>
+        <BidPrice />
             <h4>Adjust Effort</h4>
             <label>Estimation Accuracy Level</label>
         
