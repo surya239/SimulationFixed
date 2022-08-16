@@ -30,7 +30,7 @@ const handleBlur = async e => {
     const value = e.target.value
     console.log(coloumn, value)
     try {
-        const response = axios.post("http://localhost:5000/wbs",{coloumn, value})
+        const response = axios.post("/wbs",{coloumn, value})
         const data = (await response).data
         setState({
             ...state,
@@ -43,7 +43,7 @@ const handleBlur = async e => {
 }
 const defalut = async() =>{
     try {
-    const response = axios.post('http://localhost:5000/wbsdefault')
+    const response = axios.post('/wbsdefault')
     const data = (await response).data
     setValues(data)
     SetChangeState(changeState + 1)
@@ -68,7 +68,7 @@ const setValues = (data) => {
 }
 const getValues = async() => {
     try {
-        const response = axios.get(`http://localhost:5000/tablevalues/${'WBS'}/${'abc@gmail.com'}`)
+        const response = axios.get(`/tablevalues/${'WBS'}/${'abc@gmail.com'}`)
         console.log((await response).data)
         const data = (await response).data
         setValues(data)

@@ -6,11 +6,11 @@ import Resource from './Resource'
 import ResourceCost from'./ResourceCost';
 import Project from './Project'
 import Subcontract from './Subcontract'
-// import Infra from './Infra'
+import Infra from './Infra'
 // import CostofCapital from './CostofCapital'
-// import SelectContigency from './SelectContigency'
+import SelectContigency from './SelectContigency'
 import BidPrice from './BidPrice'
-// import Summary from './Summary'
+import Summary from './Summary'
 function Render(params){
     const page = params.name
     if(page === ''){
@@ -61,18 +61,18 @@ function Render(params){
     else if(page === 'subContract'){
         return <Subcontract />
     }
-    // else if(page === 'Infra'){
-    //     return <Infra />
-    // }
+    else if(page === 'Infra'){
+        return <Infra />
+    }
     // else if(page === 'costOfCapital'){
     //     return <CostofCapital />
     // }
-    // else if(page === 'Contigency'){
-    //     return <SelectContigency />
-    // }
-    // else if(page === 'Summary'){
-    //     return <Summary />
-    // }
+    else if(page === 'Contigency'){
+        return <SelectContigency />
+    }
+    else if(page === 'Summary'){
+        return <Summary />
+    }
 }
 
 export default Render

@@ -522,7 +522,9 @@ app.get('/contigency/:name', async(req, res) => {
     try {
         const {name} = req.params
         const value = await pool.query(`SELECT riskrating FROM ${name}`)
-        res.json([contigencyPercentage, value.rows[0]['riskrating']]).status(200)
+        const inhouse = contigency[value.rows[0]['riskrating']]
+        
+        res.json([contigencyPercentage, value.rows[0]['riskrating'], inhouse]).status(200)
     } catch (error) {
         console.log(error)
     }
