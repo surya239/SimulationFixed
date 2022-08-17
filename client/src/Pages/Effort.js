@@ -34,7 +34,7 @@ function Effort(){
     const change = async(e) =>{
         const value = e.value
         try {
-            const response = axios.post("http://localhost:5000/changeeffort",{value})
+            const response = axios.post("/changeeffort",{value})
         } catch (error) {
             console.log(error)
         }

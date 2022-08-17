@@ -434,7 +434,7 @@ app.get("/selectsubcon", async(req, res) => {
         const design = await pool.query("SELECT subcontractor from design")
         const testing = await pool.query("SELECT subcontractor from testing")
         const deployment = await pool.query("SELECT subcontractor from deployment")
-        
+        console.log('hi')
         res.json([
             selectSubCon,
             design.rows[0]['subcontractor'],
@@ -442,6 +442,30 @@ app.get("/selectsubcon", async(req, res) => {
             testing.rows[0]['subcontractor'],
             deployment.rows[0]['subcontractor']
           ]).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/changesub', async(req, res) => {
+    try {
+        const {value, c1} = req.body
+        let val = ''
+        if(value === 'none'){
+            val = 'none'
+        }
+        else if(value === 'subCon - 1'){
+            val = 'sub1'
+        }
+        else if(value === 'subCon - 2'){
+            val = 'sub2'
+        }
+        else if(value === 'subCon - 3'){
+            val = 'sub3'
+        }
+        console.log(val)
+        const result = await pool.query(`UPDATE ${c1} SET subcontractor = $1`, [val])
+        res.sendStatus(200)
     } catch (error) {
         console.log(error)
     }
@@ -682,7 +706,7 @@ app.get('/summary', async(req, res) => {
          
         const {cost} = (await pool.query(`SELECT cost from infra`)).rows[0]
         const infra = Math.round(totalNoOfCOST * cost)
-       console.log(totalSubCost , totalSubContractRisk ,infra , totalCotigency , onsite ,totalProject)
+    //    console.log(totalSubCost , totalSubContractRisk ,infra , totalCotigency , onsite ,totalProject)
         const overHeadCost = (totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject) * overhead / 100
         const profit = ((totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject+overHeadCost + 11121 ) / (1 - expectedprofit /100)) - (totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject+overHeadCost + 11121)
         const bitPrice = overHeadCost + totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject +profit + 11121
@@ -750,7 +774,7 @@ app.get('/getbid/:email', async(req, res) => {
 
         
         const p =salary.rows[0]['permenentsalary']
-        console.log(p)
+        // console.log(p)
         const temp = salary.rows[0]['temporarysalary']
         const permenent = {
             requirement: Math.round((requirement * salary.rows[0]['permenent'] / 100) * p +  (requirement * salary.rows[0]['temporaryload'] / 100) * temp),
@@ -808,9 +832,9 @@ app.get('/getbid/:email', async(req, res) => {
         const riskValue = await (await pool.query('SELECT * from riskrating')).rows[0]
         const subRisk = {
             requirement: contigencyCost[r.rows[0]['subcontractor']],
-            design:contigencyCost[d.rows[0]['subcontractor']],
+            design:contigencyCost[riskValue[d.rows[0]['subcontractor']]],
             coding:contigencyCost[riskValue[c.rows[0]['subcontractor']]],
-            testing:contigencyCost[t.rows[0]['subcontractor']],
+            testing:contigencyCost[riskValue[t.rows[0]['subcontractor']]],
             deployment:contigencyCost[riskValue[de.rows[0]['subcontractor']]]
         }
      
@@ -822,22 +846,18 @@ app.get('/getbid/:email', async(req, res) => {
             deployment: rcost.deployment * inhouse.deployment / 100 + subcost.deployment * subRisk.deployment /100
         }
         const {overhead, expectedprofit} = (await pool.query('SELECT * from bidsummary')).rows[0]
-        console.log(overhead, expectedprofit)
         const totalCotigency = Math.round(contigency.requirement + contigency.design + contigency.coding + contigency.testing + contigency.deployment)
 
         const totalSubContractRisk = rcost.requirement + rcost.design + rcost.coding + rcost.testing + rcost.deployment
         const totalSubCost = subcost.requirement + subcost.design + subcost.coding +  subcost.testing + subcost.deployment
         const totalNoOfCOST = noOftotalcost.requirement + noOftotalcost.design + noOftotalcost.coding + noOftotalcost.testing + noOftotalcost.deployment
-       
-         
+        console.log(subRisk)
         const {cost} = (await pool.query(`SELECT cost from infra`)).rows[0]
         const infra = Math.round(totalNoOfCOST * cost)
-       console.log(totalSubCost , totalSubContractRisk ,infra , totalCotigency , onsite ,totalProject)
         const overHeadCost = (totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject) * overhead / 100
         const profit = ((totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject+overHeadCost + 11121 ) / (1 - expectedprofit /100)) - (totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject+overHeadCost + 11121)
         const bitPrice = overHeadCost + totalSubCost + totalSubContractRisk + infra + totalCotigency + onsite + totalProject +profit + 11121
-        console.log(Math.round(bitPrice))
-        console.log(overHeadCost)
+        
         res.json(Math.round(bitPrice)).status(200)
     } catch (error) {
         console.log(error)
@@ -853,6 +873,29 @@ app.get('/totalcontigency', async(req, res) => {
         const deployment = await (await pool.query("SELECT contigency from deployment")).rows[0]
         const total = requirement['contigency'] + design['contigency'] + coding['contigency'] + testing['contigency'] + deployment['contigency']
         res.json(total).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/changeproject', async(req, res) => {
+    try {
+       const {value1, value2, c1, c2} = req.body
+       console.log(req.params)
+
+       const response = await pool.query(`UPDATE projectmanagement SET ${c1} = $1, ${c2} = $2`,[value1, value2])
+       res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/changeprojectvalues', async(req, res) => {
+    try {
+        const {value, c1} = req.body
+        console.log(req.body)
+        const result = await pool.query(`UPDATE projectmanagement SET ${c1} = $1`,[value])
+        res.sendStatus(200)
     } catch (error) {
         console.log(error)
     }

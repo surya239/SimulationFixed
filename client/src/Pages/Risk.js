@@ -21,7 +21,7 @@ function Risk(params){
     }
     useEffect(() => {
         getValues()
-    }, [])
+    }, [params.state])
     return(
         <>
             <td>{risk}</td>

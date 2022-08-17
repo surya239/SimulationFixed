@@ -28,10 +28,10 @@ function Project(){
     const [onsiteSalary, setOnsiteSalary] = useState([])
     const [defaultOnsiteSalary, setDefaultOnsiteSalary] = useState(0)
     const [onsiteCost, setOnsiteCost] = useState(0)
+    const [changeState, setChangestate] = useState(0)
     const getValues = async() => {
         try {
             const result = axios.get(`/getproject`)
-            console.log((await result).data)
             const data = (await result).data[0]
             let dataArray = []
             for(var i = 0; i<data.length; i++){
@@ -65,7 +65,7 @@ function Project(){
             setPmSalary(dataArray)
             dataArray = []
             for(var i = 0; i<(await result).data[14].length; i++){
-                dataArray[i] = {id: i, label: String((await result).data[14][i]) + ' %', value:String( (await result).data[14][i]) + ' %'}
+                dataArray[i] = {id: i, label: String((await result).data[14][i]) + ' %', value:String( (await result).data[14][i]) }
             }
             setDefaultPmSAlary((await result).data[13])
             setHeuristic(dataArray)
@@ -92,10 +92,37 @@ function Project(){
     }
     useEffect(() => {
         getValues()
-    }, [])
+        console.log(changeState)
+    }, [changeState])
+
+    const change = async(e, c1, c2) => {
+        const label = e.label
+        const value = label.split('-')
+        const value1 = value[0]
+        const value2 = value[1]
+        console.log(value1, value2, c1, c2)
+        try {
+        const response =   axios.post('/changeproject',{value1, value2, c1, c2})
+        console.log((await response).data)
+        setChangestate(changeState + 1)
+        console.log(changeState)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    const changeValue = async(e, c1) => {
+        try {
+            const value = e.value
+            const response = axios.post('/changeprojectvalues', {value, c1})
+            console.log((await response).data)
+            setChangestate(changeState + 1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return(
         <>
-        <BidPrice />
+        <BidPrice name={changeState} />
             <h3>Project Management</h3>
             <div>
                 <table>
@@ -110,7 +137,7 @@ function Project(){
                     <tbody>
                         <tr>
                             <td>
-                               { defaultTeamRatio===''?null :<Select options={teamRatio} defaultValue={{id:6, label:defaultTeamRatio, value: defaultTeamRatio} }/>}
+                               { defaultTeamRatio===''?null :<Select options={teamRatio} defaultValue={{id:6, label:defaultTeamRatio, value: defaultTeamRatio} } onChange={(e) => change(e,'teamleader', 'teamemberratio')} />}
                             </td>
                             <td>{noOfTeamMembers}</td>
                             <td>{noOfTeamLeads}</td>
@@ -120,7 +147,7 @@ function Project(){
                             <th>Team Lead Salary</th>
                         </tr>
                         <tr>
-                            <td>{defaultTeamLeadSalary === 0?null:<Select options={teamleadsalary} defaultValue={{id:0, label:defaultTeamLeadSalary, value: defaultTeamLeadSalary}} />}</td>
+                            <td>{defaultTeamLeadSalary === 0?null:<Select options={teamleadsalary} defaultValue={{id:0, label:defaultTeamLeadSalary, value: defaultTeamLeadSalary}} onChange = {(e) => changeValue(e,'teamleadsalary')} />}</td>
                            
                         </tr>
                         <tr>
@@ -131,7 +158,7 @@ function Project(){
                         </tr>
                         <tr>
                             <td>
-                                {defaultTeamLeadRatio === ''?null:<Select options={teamLeadRatio} defaultValue={{id:5, label:defaultTeamLeadRatio, value: defaultTeamLeadRatio}} />}
+                                {defaultTeamLeadRatio === ''?null:<Select options={teamLeadRatio} defaultValue={{id:5, label:defaultTeamLeadRatio, value: defaultTeamLeadRatio}} onChange={(e) => change(e,'projectmanager', 'teamleadratio')} />}
                             </td>
                             <td>{noOfTeamLeadsCount}</td>
                             <td>{noOfManager}</td>
@@ -141,7 +168,7 @@ function Project(){
                             <th>PM Salary</th>
                         </tr>
                         <tr>
-                            {defaultPmsalary === 0?null:<Select options={pmSalary} defaultValue={{id:4, label:defaultPmsalary, value:defaultPmsalary}} />}
+                            {defaultPmsalary === 0?null:<Select options={pmSalary} defaultValue={{id:4, label:defaultPmsalary, value:defaultPmsalary}} onChange = {(e) => changeValue(e, 'pmsalary')} />}
                         </tr>
                         <tr>
                             <td></td>
@@ -155,7 +182,7 @@ function Project(){
                         </tr>
                         <tr>
                             <td>
-                                {defaultHeuristic === 0?null:<Select options={Heuristic} defaultValue={{id:1, label:defaultHeuristic, value:defaultHeuristic}} />}
+                                {defaultHeuristic === 0?null:<Select options={Heuristic} defaultValue={{id:1, label:defaultHeuristic, value:defaultHeuristic}} onChange={((e) => changeValue(e, 'heuristic'))}/>}
                             </td>
                             <td></td>
                             <td>{Math.round(costHeuristic)}</td>
@@ -170,7 +197,7 @@ function Project(){
                             <td>Onsite Coordinator Cost for 5 Months </td>
                         </tr>
                         <tr>
-                            <td>{defaultonsite === ''?null:<Select options={onsite} defaultValue={{id:1, label: defaultonsite, id: defaultonsite}} />}</td>
+                            <td>{defaultonsite === ''?null:<Select options={onsite} defaultValue={{id:1, label: defaultonsite, id: defaultonsite}} onChange={(e) => change(e,'onsite','offshore')} />}</td>
                             <td>{onSite}</td>
                             <td>{maxValue / onSite}</td>
                             <td>{Math.round(onsiteCost * (maxValue / onSite) )}</td>
@@ -180,7 +207,7 @@ function Project(){
                         </tr>
                         <tr>
                             <td>
-                                {defaultOnsiteSalary === 0?null:<Select options={onsiteSalary} defaultValue={{id:0, label:defaultOnsiteSalary, value: defaultOnsiteSalary}} />}
+                                {defaultOnsiteSalary === 0?null:<Select options={onsiteSalary} defaultValue={{id:0, label:defaultOnsiteSalary, value: defaultOnsiteSalary}} onChange={(e) => changeValue(e,'onsitesalary')} />}
                             </td>
                         </tr>
                     </tbody>
