@@ -5,6 +5,7 @@ import Select from 'react-select'
 function Infra(){
     const [options,setOptions] = useState([])
     const [defaultValue, setDefaultValue] = useState(0)
+    const [cost, setCost] = useState(0)
     const getValues = async() => {
         try {
             const response = axios.get(`/getinfra`)
@@ -18,6 +19,7 @@ function Infra(){
             }
             setOptions(data)
             setDefaultValue((await response).data[1])
+            setCost((await response).data[3])
         } catch (error) {
             console.log(error)
         }
@@ -27,7 +29,26 @@ function Infra(){
     }, [])
     return(
         <>
+            <table>
+                <thead>
+                    <tr>
+                    <th>infrastructure Cost</th>
+                    <th>Total infrastructure Cost</th>
+                    </tr>
+                    
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>
            {defaultValue === 0 ?null: <Select options={options} defaultValue={{id: 0, label: defaultValue, value: defaultValue}} /> }
+
+                        </td>
+                        <td>
+                            {cost}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
         </>
     )
 }
