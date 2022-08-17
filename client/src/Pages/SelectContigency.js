@@ -1,7 +1,7 @@
 import React,{useEffect, useState} from "react";
 import axios from "axios";
 import Contigency from "./Contigency";
-
+import TotalContigency from './TotalContigency'
 function SelectContigency(){
     return(
         <>
@@ -11,6 +11,8 @@ function SelectContigency(){
                     <th>Risk Rating</th>
                     <th>Module</th>
                     <th>Inhouse Risk Impact</th>
+                    <th>Subcontract Risk Rating</th>
+                    <th>Subcontract Risk Rating Impact</th>
                    <th>Contigency</th>
                 </tr>
                    
@@ -30,6 +32,9 @@ function SelectContigency(){
                     </tr>
                     <tr>
             <Contigency name='deployment' module='Deployment' ></Contigency><br></br>
+                    </tr>
+                    <tr>
+                        <TotalContigency />
                     </tr>
                 </tbody>
             </table>

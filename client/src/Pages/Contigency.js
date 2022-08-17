@@ -7,6 +7,9 @@ function Contigency(params){
     const [options, setOptions] = useState([])
     const [defaultValue, setDefaultValue] = useState('')
     const [inhouse, setInhouse] = useState(0)
+    const [risk, setRisk] = useState('')
+    const [subRisk, setSubRisk] = useState(0)
+    const [contigency, setContigency] = useState(0)
     const getValues = async() => {
         try {
             const response = axios.get(`/contigency/${name}`)
@@ -21,6 +24,9 @@ function Contigency(params){
             setOptions(data)
             setDefaultValue((await response).data[1])
             setInhouse((await response).data[2])
+            setRisk((await response).data[3])
+            setSubRisk((await response).data[4])
+            setContigency((await response).data[5])
         } catch (error) {
             console.error(error)
         }
@@ -34,6 +40,9 @@ function Contigency(params){
            <td> {defaultValue === ''?null:<Select options={options} defaultValue={{id:0, label: defaultValue, value: defaultValue}} />}</td>
            <td>{params.module}</td>
            <td>{inhouse}%</td>
+           <td>{risk}</td>
+           <td>{subRisk}%</td>
+           <td>{contigency}</td>
         </>
     )
 }

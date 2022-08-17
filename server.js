@@ -522,9 +522,20 @@ app.get('/contigency/:name', async(req, res) => {
     try {
         const {name} = req.params
         const value = await pool.query(`SELECT riskrating FROM ${name}`)
+        const sub = await pool.query(`SELECT Subcontractor, cost, rcost from ${name}`)
         const inhouse = contigency[value.rows[0]['riskrating']]
-        
-        res.json([contigencyPercentage, value.rows[0]['riskrating'], inhouse]).status(200)
+        var risk = ''
+        if(sub.rows[0]['subcontractor'] === 'None' || sub.rows[0]['subcontractor'] === 'none'){
+            risk = 'None'
+        }
+        else{
+            const Risk = await pool.query(`SELECT ${sub.rows[0]['subcontractor']} FROM riskrating`)
+            risk = Risk.rows[0][sub.rows[0]['subcontractor']]
+        }
+        const subRisk = contigency[risk]
+        const c = Math.round((sub.rows[0]['rcost'] * inhouse / 100) + (sub.rows[0]['cost'] * subRisk /100))
+        await pool.query(`UPDATE ${name} SET contigency = $1`,[c])
+        res.json([contigencyPercentage, value.rows[0]['riskrating'], inhouse, risk, subRisk, c]).status(200)
     } catch (error) {
         console.log(error)
     }
@@ -692,6 +703,21 @@ app.get('/getbid/:email', async(req, res) => {
         console.log(error)
     }
 })
+
+app.get('/totalcontigency', async(req, res) => {
+    try {
+        const requirement = await (await pool.query("SELECT contigency from requirement")).rows[0]
+        const design = await (await pool.query("SELECT contigency from design")).rows[0]
+        const coding = await (await pool.query("SELECT contigency from coding")).rows[0]
+        const testing = await (await pool.query("SELECT contigency from testing")).rows[0]
+        const deployment = await (await pool.query("SELECT contigency from deployment")).rows[0]
+        const total = requirement['contigency'] + design['contigency'] + coding['contigency'] + testing['contigency'] + deployment['contigency']
+        res.json(total).status(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, 'client/build/index.html'));
 } )
