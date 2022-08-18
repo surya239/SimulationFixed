@@ -37,7 +37,7 @@ const change = (a) =>{
                         <li><button onClick={() => change('subContract')}>Sub contract</button></li>
                         <li><button onClick={() => change('Contigency')} >Contigency</button></li>
                         <li><button onClick={() => change('Infra')} >Infra</button></li>
-                        <li><button onClick={() => change("costOfCapital")} >Cost of Capital</button></li>
+                        {/* <li><button onClick={() => change("costOfCapital")} >Cost of Capital</button></li> */}
                         <li><button onClick={() => change('Summary')}>Overhead</button></li>
                         <li><button onClick={() => change('Summary')}>Profit</button></li>
                         <li><button onClick={() => change('Summary')} >Summary</button></li>
