@@ -9,6 +9,7 @@ import pool  from './db.js';
 import axios from 'axios';
 import bcrypt from 'bcrypt';
 import {google} from 'googleapis'
+import { query } from "express";
 app.use(cors());
 let L = ['100-0', '80-20', '70-30', '50-50', '30-70', '20-80'];
 let x = [1800, 1900, 2000]
@@ -915,6 +916,17 @@ app.post('/changebidsummary', async(req, res) => {
     try {
         const {value, column} = req.body
         const result = await pool.query(`UPDATE bidsummary SET ${column} = $1`, [value])
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/infrachange', async(req, res) => {
+    try {
+        const {value, c} = req.body
+        console.log(value)
+        await pool.query(`UPDATE infra SET cost = $1`,[value])
         res.sendStatus(200)
     } catch (error) {
         console.log(error)

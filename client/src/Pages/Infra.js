@@ -1,11 +1,12 @@
 import React,{useState, useEffect} from "react";
 import axios from "axios";
 import Select from 'react-select'
-
+import BidPrice from "./BidPrice";
 function Infra(){
     const [options,setOptions] = useState([])
     const [defaultValue, setDefaultValue] = useState(0)
     const [cost, setCost] = useState(0)
+    const [state, setState] = useState(0)
     const getValues = async() => {
         try {
             const response = axios.get(`/getinfra`)
@@ -26,9 +27,21 @@ function Infra(){
     }
     useEffect(() => {
         getValues()
-    }, [])
+    }, [state])
+
+    const change = async(e) => {
+        try {
+            const value = e.value
+            const c = 'cost'
+            const response = axios.post('/infrachange', {value, c})
+            setState(state + 1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     return(
         <>
+        <BidPrice name={state} />
             <table>
                 <thead>
                     <tr>
@@ -40,7 +53,7 @@ function Infra(){
                 <tbody>
                     <tr>
                         <td>
-           {defaultValue === 0 ?null: <Select options={options} defaultValue={{id: 0, label: defaultValue, value: defaultValue}} /> }
+           {defaultValue === 0 ?null: <Select options={options} defaultValue={{id: 0, label: defaultValue, value: defaultValue}} onChange={(e) => change(e)} /> }
 
                         </td>
                         <td>

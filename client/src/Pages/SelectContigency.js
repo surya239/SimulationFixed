@@ -2,9 +2,11 @@ import React,{useEffect, useState} from "react";
 import axios from "axios";
 import Contigency from "./Contigency";
 import TotalContigency from './TotalContigency'
+import BidPrice from "./BidPrice";
 function SelectContigency(){
     return(
         <>
+        <BidPrice />
         <table>
                 <thead>
                     <tr>
