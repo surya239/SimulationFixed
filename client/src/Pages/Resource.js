@@ -43,7 +43,7 @@ function Resource(){
     }
     const gethefault = async() => {
         try {
-            const response = axios.get(`http://localhost:5000/getresource/${'abc@gmail.com'}`)
+            const response = axios.get(`/getresource/${'abc@gmail.com'}`)
             const data = (await response).data[0]
             setData(data, (await response).data[1])
             const d = (await response).data[2]
