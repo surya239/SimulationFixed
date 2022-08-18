@@ -1,7 +1,13 @@
 import React from "react";
 import Select from 'react-select'
 import SelectProductivity from "./SelectProductivity";
-function Productivity(){
+function Productivity(params){
+    const {state, name} = params
+    const changeval = (val) => {
+        state(val)
+        console.log(val)
+    }
+
     return (
         <>
             <table>
@@ -18,41 +24,41 @@ function Productivity(){
                     <td>
                         Complex Screen
                     </td>
-                    <SelectProductivity name={'complexscreen' } />
+                    <SelectProductivity name={'complexscreen' } states = {changeval} value={name} />
                 </tr>
                 <tr>
                     <td>
                         Simple Screen
                     </td>
-                    <SelectProductivity name={'simplescreen' } />
+                    <SelectProductivity name={'simplescreen' } states = {changeval} value={name} />
                 </tr>
                 <tr>
                     <td>
                         Complex Database
                     </td>
-                    <SelectProductivity name={'complexdatabase' } />
+                    <SelectProductivity name={'complexdatabase' } states = {changeval} value={name} />
                 </tr>
                 <tr>
                     <td>
                         Simple Database
                     </td>
-                    <SelectProductivity name={'simpledatabase' } />
+                    <SelectProductivity name={'simpledatabase' } states = {changeval} value={name} />
                 </tr>
                 <tr>
                     <td>Complex Api</td>
-                    <SelectProductivity name={'complexapi'} />
+                    <SelectProductivity name={'complexapi'} states = {changeval} value={name} />
                 </tr>
                 <tr>
                     <td>Simple Api</td>
-                    <SelectProductivity name={'simpleapi'} />
+                    <SelectProductivity name={'simpleapi'} states = {changeval} value={name} />
                 </tr>
                <tr>
                     <td>Complex Report</td>
-                    <SelectProductivity name={'complexreport'} />
+                    <SelectProductivity name={'complexreport'} states = {changeval} value={name} />
                 </tr>
                 <tr>
                     <td>Simple Report</td>
-                    <SelectProductivity name={'simplereport'} />
+                    <SelectProductivity name={'simplereport'} states = {changeval} value={name} />
                 </tr>
             </tbody>
             </table>

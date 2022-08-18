@@ -34,7 +34,7 @@ function Render(params){
         return(
             <>
                 <Effort />
-                <Productivity />
+              
             </>
         )
     }
@@ -42,8 +42,7 @@ function Render(params){
     else if(page === 'Productivity'){
         return (
             <>
-            <BidPrice />
-            <Productivity />
+            <Effort />
             </>
         )
     }
