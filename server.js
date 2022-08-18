@@ -724,6 +724,16 @@ const contigencyCost = {
     None:0,
     none:0
 }
+
+app.post('/changecontigency', async(req, res) => {
+    try {
+        const {name, label} = req.body
+        const result = await pool.query(`UPDATE ${name} SET riskrating = $1`,[label])
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
 app.get('/getbid/:email', async(req, res) => {
     try {
         const {email} = req.params
@@ -895,6 +905,16 @@ app.post('/changeprojectvalues', async(req, res) => {
         const {value, c1} = req.body
         console.log(req.body)
         const result = await pool.query(`UPDATE projectmanagement SET ${c1} = $1`,[value])
+        res.sendStatus(200)
+    } catch (error) {
+        console.log(error)
+    }
+})
+
+app.post('/changebidsummary', async(req, res) => {
+    try {
+        const {value, column} = req.body
+        const result = await pool.query(`UPDATE bidsummary SET ${column} = $1`, [value])
         res.sendStatus(200)
     } catch (error) {
         console.log(error)

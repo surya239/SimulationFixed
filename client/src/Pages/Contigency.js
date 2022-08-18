@@ -10,6 +10,7 @@ function Contigency(params){
     const [risk, setRisk] = useState('')
     const [subRisk, setSubRisk] = useState(0)
     const [contigency, setContigency] = useState(0)
+    const [state, setState] = useState(0)
     const getValues = async() => {
         try {
             const response = axios.get(`/contigency/${name}`)
@@ -31,13 +32,23 @@ function Contigency(params){
             console.error(error)
         }
     }
+    const change = async(e, name) => {
+        const label = e.value
+        try {
+            const response = axios.post('/changecontigency', {label, name})
+            console.log((await response).data)
+            setState(state + 1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
     useEffect(() => {
         getValues()
-    },[])
+    },[state])
     return(
         <>
             
-           <td> {defaultValue === ''?null:<Select options={options} defaultValue={{id:0, label: defaultValue, value: defaultValue}} />}</td>
+           <td> {defaultValue === ''?null:<Select options={options} defaultValue={{id:0, label: defaultValue, value: defaultValue}} onChange={(e) => change(e, name)} />}</td>
            <td>{params.module}</td>
            <td>{inhouse}%</td>
            <td>{risk}</td>

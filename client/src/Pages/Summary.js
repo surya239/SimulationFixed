@@ -17,6 +17,7 @@ function Summary(){
     const [financing, setFinancing] = useState(0)
     const [profitCost, setProfitCost] = useState(0)
     const [bidprice, setbidprice] = useState(0)
+    const [state, setState] = useState(0)
     const getValues = async() => {
         try {
             const response = axios.get(`/summary`)
@@ -25,7 +26,7 @@ function Summary(){
                 data[i] = {
                     id:i,
                     label: String((await response).data[0][i])+'%',
-                    value: String((await response).data[0][i])+'%'
+                    value: String((await response).data[0][i])
                 }
             }
             setOffshore(data)
@@ -34,7 +35,7 @@ function Summary(){
                 data[i] = {
                     id:i,
                     label: String((await response).data[1][i])+'%',
-                    value: String((await response).data[1][i])+'%'
+                    value: String((await response).data[1][i])
                 }
             }
             setProfit(data)
@@ -55,16 +56,26 @@ function Summary(){
         }
     }
 
+    const change = async(e, column) => {
+        const value = e.value
+        try {
+            const response = axios.post('/changebidsummary', {value, column})
+            setState(state + 1)
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
     useEffect(() => {
         getValues()
-    }, [])
+    }, [state])
 
     return(
         <>
             <h4>Overhead Charges</h4>
-            {defaultOffshore === ''? null: <Select options={offshore} defaultValue={{id: 0, label: defaultOffshore , value:defaultOffshore }} />}
+            {defaultOffshore === ''? null: <Select options={offshore} defaultValue={{id: 0, label: defaultOffshore , value:defaultOffshore }}  onChange={(e) => change(e, 'overhead')} />}
             <h4>Select the expected Profit %</h4>
-            {defaultProject === '' ? null: <Select options={profit} defaultValue={{id: 0, label: defaultProject, value: defaultProject}} />}
+            {defaultProject === '' ? null: <Select options={profit} defaultValue={{id: 0, label: defaultProject, value: defaultProject}} onChange={(e) => change(e, 'expectedprofit')} />}
             <table>
                 <thead>
                     <tr>
