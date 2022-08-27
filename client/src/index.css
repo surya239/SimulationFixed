@@ -1,3 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+*{
+  font-family: 'Poppins', sans-serif;
+}
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -5,6 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  background-color: aliceblue;
 }
 
 code {
@@ -14,22 +19,153 @@ code {
 
 .flex{
   display: flex;
+  margin: 10px;
 }
-table, th, td {
+/* table, th, td {
   border: 1px solid;
-}
+} */
 table{
   border-collapse: collapse;
 }
 .styleNone{
   list-style: none;
+  margin-top: 10px;
 }
 
 button{
   padding: 10px 20px;
   width: 200px;
+  background-color: #86e5fa;
+border: none;
+  border-bottom: 1px dotted red;
+  /* border-radius: 4px; */
+  font-size: 18px;
 }
 ul{
   padding: 0;
   margin: 0;
+}
+
+/* dashboard */
+
+.Dash{
+  display:flex;
+  margin: 10px;
+  justify-content: space-between;
+  /* background-color: rgb(172, 172, 255); */
+  background-color: #86e5fa;
+
+  box-shadow: 5px 5px 5px rgba(0,0,0, 0.2);
+}
+ 
+.n{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+
+.Dash h1, h2, h3, h4, h5, h5{
+  margin: 0;
+  padding: 5px;
+}
+.first{
+  width: 15%;
+}
+
+.second{
+  width: 85%;
+}
+
+.sumbit{
+  background-color: #86e5fa;
+  border:1px solid #55d0ec;
+  border-radius: 4px;
+  margin: 10px;
+
+}
+
+h1{
+  font-size: 30px;
+}
+.wbs, .effort{
+  background-color: white;
+  display: flex;
+  padding: 10px;
+}
+.wbs h3{
+  margin-left: 0;
+  margin-right: 0;
+  padding: 0;
+}
+.effort{
+  gap:20px;
+}
+.effort .effortChild{
+  width: 20%;
+  padding: 0px 40px;
+}
+.wbs form{
+  width: 100%;
+}
+
+.divider{
+  display: flex;
+  margin:10px;
+}
+
+input{
+  padding: 10px 10px  ;
+  width: 200px;
+  border: 1px solid #55d0ec;
+}
+
+.l{
+  width: 20%;
+}
+
+.thead, .tbody{
+padding: 10px;
+background-color: #86e5fa;
+display: flex;
+margin: 10px;
+/* box-shadow: 4px 5px 5px rgba(0,0,0,.2); */
+border: 1px solid #55d0ec;
+}
+
+.thead th{
+  padding: 10px;
+
+}
+
+.tbody{
+  background-color: white;
+}
+
+.tbody td{
+  padding: 0px 10px;
+  
+}
+
+.firstrow{
+  width: 200px;
+  text-align: center;
+}
+
+.secondrow{
+  width: 200px;
+}
+
+.thirdrow{
+  width: 300px;
+  text-align: center;
+}
+
+.subfirst{
+  width: 300px;
+}
+
+.subsecond{
+  width: 200px;
+  text-align: center;
 }

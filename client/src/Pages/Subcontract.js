@@ -6,9 +6,18 @@ import BidPrice from "./BidPrice";
 function Subcontract(){
     return(
         <>
-            {/* <h1>Hello</h1> */}
-            <BidPrice />
-            <table>
+             <div className='Dash'>
+            <div className='n'>
+                <h1>Subcontract Cost</h1>
+
+            </div>
+            <div className='n'>
+                <BidPrice />
+            </div>
+        </div>
+
+
+            {/* <table>
                 <tbody>
                     <tr>
                         <th>Sub Contract Cost</th>
@@ -76,8 +85,11 @@ function Subcontract(){
                         <SubcontractModule name='deployment' />
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
+            <div className="effort">
             <SelectSubCon />
+
+            </div>
         </>
     )
 }

@@ -6,40 +6,51 @@ import BidPrice from "./BidPrice";
 function SelectContigency(){
     return(
         <>
-        <BidPrice />
+        <div className='Dash'>
+            <div className='n'>
+                <h1>Contigency</h1>
+
+            </div>
+            <div className='n'>
+                <BidPrice />
+            </div>
+        </div>
+        <div className="effort">
         <table>
                 <thead>
-                    <tr>
-                    <th>Risk Rating</th>
-                    <th>Module</th>
-                    <th>Inhouse Risk Impact</th>
+                    <tr  className="thead" >
+                    <th className="subsecond" >Module</th>
+                    <th className="subfirst">Risk Rating</th>
+                    
+                    {/* <th>Inhouse Risk Impact</th>
                     <th>Subcontract Risk Rating</th>
                     <th>Subcontract Risk Rating Impact</th>
-                   <th>Contigency</th>
+                   <th>Contigency</th> */}
                 </tr>
                    
                 </thead>
                 <tbody>
-                    <tr>
+                    <tr className="tbody" >
                     <Contigency name='requirement' module='Requiremeent'></Contigency><br></br>
                     </tr>
-                    <tr>
+                    <tr className="tbody" >
                     <Contigency name='design' module = 'Design'></Contigency><br></br>
                     </tr>
-                    <tr>
+                    <tr className="tbody" >
                     <Contigency name='coding' module='Coding'></Contigency><br></br>
                     </tr>
-                    <tr>
+                    <tr className="tbody">
                     <Contigency name='testing' module='Testing' ></Contigency><br></br>
                     </tr>
-                    <tr>
+                    <tr className="tbody">
             <Contigency name='deployment' module='Deployment' ></Contigency><br></br>
                     </tr>
-                    <tr>
+                    {/* <tr>
                         <TotalContigency />
-                    </tr>
+                    </tr> */}
                 </tbody>
             </table>
+            </div> 
         </>
     )
 }

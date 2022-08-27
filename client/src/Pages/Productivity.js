@@ -2,63 +2,60 @@ import React from "react";
 import Select from 'react-select'
 import SelectProductivity from "./SelectProductivity";
 function Productivity(params){
-    const {state, name} = params
-    const changeval = (val) => {
-        state(val)
-        console.log(val)
-    }
+    const {setUpdate, name} = params
+    
 
     return (
         <>
             <table>
                 <thead>
-                    <tr>
-                    <th>Deliverable type</th>
+                    <tr className="thead">
+                    <th className="firstrow" >Deliverable type</th>
 
-                    <th>Productivity</th>
-                    <th>Effort Per Unit of Deliverable</th>
+                    <th className="secondrow">Productivity</th>
+                    <th className="thirdrow">Effort Per Unit of Deliverable</th>
                     </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td>
+                <tr className="tbody">
+                    <td className="firstrow"> 
                         Complex Screen
                     </td>
-                    <SelectProductivity name={'complexscreen' } states = {changeval} value={name} />
+                    <SelectProductivity name={'complexscreen' } setUpdate = {setUpdate} value={name} />
                 </tr>
-                <tr>
-                    <td>
+                <tr className="tbody">
+                    <td className="firstrow">
                         Simple Screen
                     </td>
-                    <SelectProductivity name={'simplescreen' } states = {changeval} value={name} />
+                    <SelectProductivity name={'simplescreen' } setUpdate = {setUpdate} value={name} />
                 </tr>
-                <tr>
-                    <td>
+                <tr className="tbody">
+                    <td className="firstrow">
                         Complex Database
                     </td>
-                    <SelectProductivity name={'complexdatabase' } states = {changeval} value={name} />
+                    <SelectProductivity name={'complexdatabase' } setUpdate = {setUpdate} value={name} />
                 </tr>
-                <tr>
-                    <td>
+                <tr className="tbody">
+                    <td className="firstrow">
                         Simple Database
                     </td>
-                    <SelectProductivity name={'simpledatabase' } states = {changeval} value={name} />
+                    <SelectProductivity name={'simpledatabase' } setUpdate = {setUpdate} value={name} />
                 </tr>
-                <tr>
-                    <td>Complex Api</td>
-                    <SelectProductivity name={'complexapi'} states = {changeval} value={name} />
+                <tr className="tbody">
+                    <td className="firstrow">Complex Api</td>
+                    <SelectProductivity name={'complexapi'} setUpdate = {setUpdate} value={name} />
                 </tr>
-                <tr>
-                    <td>Simple Api</td>
-                    <SelectProductivity name={'simpleapi'} states = {changeval} value={name} />
+                <tr className="tbody">
+                    <td className="firstrow">Simple Api</td>
+                    <SelectProductivity name={'simpleapi'} setUpdate = {setUpdate} value={name} />
                 </tr>
-               <tr>
-                    <td>Complex Report</td>
-                    <SelectProductivity name={'complexreport'} states = {changeval} value={name} />
+               <tr className="tbody">
+                    <td className="firstrow">Complex Report</td>
+                    <SelectProductivity name={'complexreport'} setUpdate = {setUpdate} value={name} />
                 </tr>
-                <tr>
-                    <td>Simple Report</td>
-                    <SelectProductivity name={'simplereport'} states = {changeval} value={name} />
+                <tr className="tbody">
+                    <td className="firstrow">Simple Report</td>
+                    <SelectProductivity name={'simplereport'} setUpdate = {setUpdate} value={name} />
                 </tr>
             </tbody>
             </table>

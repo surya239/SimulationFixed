@@ -6,7 +6,7 @@ function Infra(){
     const [options,setOptions] = useState([])
     const [defaultValue, setDefaultValue] = useState(0)
     const [cost, setCost] = useState(0)
-    const [state, setState] = useState(0)
+    const [update, setUpdate] = useState(0)
     const getValues = async() => {
         try {
             const response = axios.get(`/getinfra`)
@@ -27,41 +27,52 @@ function Infra(){
     }
     useEffect(() => {
         getValues()
-    }, [state])
+    }, [update])
 
     const change = async(e) => {
         try {
             const value = e.value
             const c = 'cost'
             const response = axios.post('/infrachange', {value, c})
-            setState(state + 1)
+            setUpdate(update + 1)
         } catch (error) {
             console.log(error)
         }
     }
     return(
         <>
-        <BidPrice name={state} />
+        <div className='Dash'>
+            <div className='n'>
+                <h1>Infrastructure Cost</h1>
+
+            </div>
+            <div className='n'>
+                <BidPrice name={update} />
+            </div>
+        </div>
+        {/* <BidPrice name={update} /> */}
+        <div className="effort">
             <table>
                 <thead>
-                    <tr>
-                    <th>infrastructure Cost</th>
-                    <th>Total infrastructure Cost</th>
+                    <tr className="thead">
+                    <th className="thirdrow">infrastructure Cost</th>
+                    <th className="thirdrow">Total infrastructure Cost</th>
                     </tr>
                     
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>
+                    <tr className="tbody">
+                        <td className="thirdrow">
            {defaultValue === 0 ?null: <Select options={options} defaultValue={{id: 0, label: defaultValue, value: defaultValue}} onChange={(e) => change(e)} /> }
 
                         </td>
-                        <td>
+                        <td className="thirdrow">
                             {cost}
                         </td>
                     </tr>
                 </tbody>
             </table>
+            </div>
         </>
     )
 }

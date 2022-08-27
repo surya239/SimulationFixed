@@ -6,7 +6,7 @@ import Productivity from './Productivity'
 function Effort(){
     const [option, setOption] = useState([])
     const [d, setDefaultValue] = useState(0)
-    const [state, setState] = useState(0)
+    const [update, setUpdate] = useState(0)
     const getValue = async() => {
         try {
             const result = axios.get(`/adjust/${'abc'}`)
@@ -37,7 +37,7 @@ function Effort(){
         const value = e.value
         try {
             const response = axios.post("/changeeffort",{value})
-            setState(state + 1)
+            setUpdate(update + 1)
         } catch (error) {
             console.log(error)
         }
@@ -46,19 +46,30 @@ function Effort(){
  getValue()
     },[])
 
-    const chageState = (val) => {
-        setState(val)
-    }
+    
     return(
         <>
-        <BidPrice name={state} />
-            <h4>Adjust Effort</h4>
+        <div className="Dash">
+            <div className="n">
+                <h1>Effort</h1>
+            </div>
+            <div>
+        <BidPrice name={update}/>
+
+            </div>
+        </div>
+        <div className='effort'>
+        <div className='effortChild'>
+        <h4>Adjust Effort</h4>
             <label>Estimation Accuracy Level</label>
         
             {d === 0 ? null : <Select options={option}  defaultValue={{id:3, label:d, value:d}}  onChange={(e) => change(e)}  />}
-            <Productivity state = {chageState} name={state}/>
+        </div>
+        
+            <Productivity setUpdate = {setUpdate} name={update}/>
+        </div>
+            
         </>
-    )
-}
+    )}
 
 export default Effort

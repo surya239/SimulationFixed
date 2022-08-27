@@ -47,50 +47,53 @@ function SelectSubCon(){
     },[state])
     return(
         <>
+
             <table>
                 <thead>
-                    <tr>
-                        <th>Select Sub Contractor</th>
-                        <th>Module</th>
-                        <th>Risk Rating</th>
+                    <tr className="thead">
+                    <th className="subsecond">Module</th>
+
+                        <th className="subfirst">Select Sub Contractor</th>
+                        {/* <th>Risk Rating</th>
                         <th>Sub Contract Cost</th>
                         <th>Resource Cost after Subcontracting</th>
-                        <th>Number of Internal Resources after subcontracting</th>
+                        <th>Number of Internal Resources after subcontracting</th> */}
                     </tr>
-                    <tr>
-                        {<td><Select options={selectOptions} isDisabled={true} defaultValue={{id:0, label: 'None', value:'None'}} /></td>}
-                        <td>Requirement</td>
-                        <Risk name='requirement' state = {state} />
+                    <tr className="tbody" >
+                    <td className="subsecond">Requirement</td>
+                        {<td className="subfirst" ><Select options={selectOptions} isDisabled={true} defaultValue={{id:0, label: 'None', value:'None'}} /></td>}
+                        {/* <Risk name='requirement' state = {state} /> */}
                     </tr>
-                    <tr>
-                        {defaultDesign === ''?null:<td><Select options={selectOptions} defaultValue={{id:0,  value:defaultDesign, label: defaultDesign === 'none'? 'none':defaultDesign ==='sub1'? 'SubCon - 1': defaultDesign === 'sub2'?'SubCon - 2': defaultDesign ==='sub3'?'SubCon - 3':null }} onChange ={(e) => change(e, 'design')} /></td>}
-                        <td>Design</td>
-                        <Risk name='design' state = {state} />
+                    <tr className="tbody" >
+                    <td className="subsecond">Design</td>
+
+                        {defaultDesign === ''?null:<td className="subfirst"><Select options={selectOptions} defaultValue={{id:0,  value:defaultDesign, label: defaultDesign === 'none'? 'none':defaultDesign ==='sub1'? 'SubCon - 1': defaultDesign === 'sub2'?'SubCon - 2': defaultDesign ==='sub3'?'SubCon - 3':null }} onChange ={(e) => change(e, 'design')} /></td>}
+                        {/* <Risk name='design' state = {state} /> */}
 
                     </tr>
-                    <tr>
-                        {defaultCoding === ''?null:<td><Select options={selectOptions} defaultValue={{id:0 ,value:defaultCoding,label: defaultCoding === 'none'? 'none':defaultCoding ==='sub1'? 'SubCon - 1': defaultCoding === 'sub2'?'SubCon - 2': defaultCoding ==='sub3'?'SubCon - 3':'SubCon' }} onChange={(e) => change(e, 'coding')} /></td>}
-                        <td>Coding</td>
-                        <Risk name='coding' state = {state} />
+                    <tr className="tbody" >
+                    <td className="subsecond" >Coding</td>
+                        {defaultCoding === ''?null:<td className="subfirst" ><Select options={selectOptions} defaultValue={{id:0 ,value:defaultCoding,label: defaultCoding === 'none'? 'none':defaultCoding ==='sub1'? 'SubCon - 1': defaultCoding === 'sub2'?'SubCon - 2': defaultCoding ==='sub3'?'SubCon - 3':'SubCon' }} onChange={(e) => change(e, 'coding')} /></td>}
+                        {/* <Risk name='coding' state = {state} /> */}
 
                     </tr>
-                    <tr>
-                    {defaultTesting === ''?null:<td><Select options={selectOptions} defaultValue={{id:0, value:defaultTesting, label: defaultTesting === 'none'? 'none':defaultTesting ==='sub1'? 'SubCon - 1': defaultTesting === 'sub2'?'SubCon - 2': defaultTesting ==='sub3'?'SubCon - 3':'SubCon'}} onChange={(e) => change(e,'testing')} /></td>}
+                    <tr className="tbody" >
+                    <td className="subsecond">Testing</td>
 
-                        <td>Testing</td>
-                        <Risk name='testing' state = {state} />
+                    {defaultTesting === ''?null:<td className="subfirst" ><Select options={selectOptions} defaultValue={{id:0, value:defaultTesting, label: defaultTesting === 'none'? 'none':defaultTesting ==='sub1'? 'SubCon - 1': defaultTesting === 'sub2'?'SubCon - 2': defaultTesting ==='sub3'?'SubCon - 3':'SubCon'}} onChange={(e) => change(e,'testing')} /></td>}
 
-                    </tr>
-                    <tr>
-                        {defaultDeployment === ''? null:<td><Select options={selectOptions} defaultValue={{id:0, value:defaultDeployment, label: defaultDeployment === 'none'? 'None':defaultDeployment ==='sub1'? 'SubCon - 1': defaultDeployment === 'sub2'?'SubCon - 2': defaultDeployment ==='sub3'?'SubCon - 3':null}} onChange={(e) => change(e,'deployment')} /></td>}
-
-                        <td>Deploymentt</td>
-                        <Risk name='deployment' state = {state} />
+                        {/* <Risk name='testing' state = {state} /> */}
 
                     </tr>
-                    <tr>
-                      
+                    <tr className="tbody">
+                    <td className="subsecond" >Deployment</td>
+
+                        {defaultDeployment === ''? null:<td className="subfirst" ><Select options={selectOptions} defaultValue={{id:0, value:defaultDeployment, label: defaultDeployment === 'none'? 'None':defaultDeployment ==='sub1'? 'SubCon - 1': defaultDeployment === 'sub2'?'SubCon - 2': defaultDeployment ==='sub3'?'SubCon - 3':null}} onChange={(e) => change(e,'deployment')} /></td>}
+
+                        {/* <Risk name='deployment' state = {state} /> */}
+
                     </tr>
+                   
                 </thead>
             </table>
         </>

@@ -15,8 +15,16 @@ function Render(params){
     const page = params.name
     if(page === ''){
         return (<>
-        <BidPrice />
-        <h1>Dash Board</h1>
+        <div className='Dash'>
+            <div className='n'>
+                <h1>Dash Board</h1>
+
+            </div>
+            <div className='n'>
+                <BidPrice />
+            </div>
+        </div>
+
 
         </>
         )
@@ -63,9 +71,9 @@ function Render(params){
     else if(page === 'Infra'){
         return <Infra />
     }
-    // else if(page === 'costOfCapital'){
-    //     return <CostofCapital />
-    // }
+    // // else if(page === 'costOfCapital'){
+    // //     return <CostofCapital />
+    // // }
     else if(page === 'Contigency'){
         return <SelectContigency />
     }

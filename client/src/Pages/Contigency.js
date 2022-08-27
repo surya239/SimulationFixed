@@ -47,13 +47,8 @@ function Contigency(params){
     },[state])
     return(
         <>
-            
-           <td> {defaultValue === ''?null:<Select options={options} defaultValue={{id:0, label: defaultValue, value: defaultValue}} onChange={(e) => change(e, name)} />}</td>
-           <td>{params.module}</td>
-           <td>{inhouse}%</td>
-           <td>{risk}</td>
-           <td>{subRisk}%</td>
-           <td>{contigency}</td>
+            <td className="subsecond" >{params.module}</td>
+           <td className="subfirst"> {defaultValue === ''?null:<Select options={options} defaultValue={{id:0, label: defaultValue, value: defaultValue}} onChange={(e) => change(e, name)} />}</td>
         </>
     )
 }

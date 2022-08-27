@@ -84,32 +84,68 @@ getValues()
 },[])
 return(
     <>
+        <div className="Dash">
+            <div className="n">
+                <h1>WBS</h1>
+            </div>
+            <div>
         <BidPrice name={changeState} />
+
+            </div>
+        </div>
+        <div className="wbs">
         <form>
-                        Quantity Adjust<br></br>
-                        Deliverable Type Estimate Quality<br/>
-                        <label>Complex Screen</label>
-                        <input type="number" id="complexScreen" value={state.complexScreen} onChange={handleChange} name="complexScreen" onBlur={handleBlur} ></input><br />
-                        <label>Simple Screen</label>
-                        <input type="number" id="simpleScreen" value={state.simpleScreen} name="simpleScreen" onChange={handleChange} onBlur={handleBlur}  ></input><br />
-                        <label>Complex database</label>
-                        <input type="number" id="complexDatabase" value={state.complexDatabase} name="complexDatabase" onChange={handleChange} onBlur={handleBlur}  ></input><br />
-                        <label>Simple database</label>
-                        <input type="number" id="simpleDatabase" value={state.simpleDatabase} name="simpleDatabase" onChange={handleChange} onBlur={handleBlur}  /><br />
-                        <label>Complex API</label>
-                        <input type="number" id="complexApi" value={state.complexApi} name="complexApi" onChange={handleChange} onBlur={handleBlur}  /><br />
-                        <label>Simple API</label>
-                        <input type="number" id="simpleApi" value={state.simpleApi} name="simpleApi" onChange={handleChange} onBlur={handleBlur}  /><br />
-                        <label>Complex Report</label>
-                        <input type="number" id="complexReport" name="complexReport" value={state.complexReport} onChange={handleChange} onBlur={handleBlur}  /><br />
-                        <label>Simple Report</label>
-                        <input type="number" id="simpleReport" name="simpleReport" value={state.simpleReport} onChange={handleChange} onBlur={handleBlur}  /><br />
-                        <label>Total</label>
-                        <input type="number" id="total" name="total" value={state.total} disabled  />
+                        <div className="divider" >
+                            <h3 className="l">Quantity</h3>
+                            <h3 >Adjust</h3>
+                        </div>
+
+                        <div className="divider" >
+                            <h3 className="l">Deliverable Type</h3>
+                            <h3 >Estimate Quantity</h3>
+                        </div>
+                        <div className="divider" >
+                            <label className="l" >Complex Screen</label>
+                            <input type="number" id="complexScreen" value={state.complexScreen} onChange={handleChange} name="complexScreen" onBlur={handleBlur} ></input><br />
+                        </div>
+                        <div className="divider">
+                            <label className="l">Simple Screen</label>
+                            <input type="number" id="simpleScreen" value={state.simpleScreen} name="simpleScreen" onChange={handleChange} onBlur={handleBlur}  ></input><br />
+                        </div>
+                        <div className="divider">
+                            <label className="l">Complex database</label>
+                            <input type="number" id="complexDatabase" value={state.complexDatabase} name="complexDatabase" onChange={handleChange} onBlur={handleBlur}  ></input><br />  
+                        </div>
+                        <div className="divider">
+                            <label className="l">Simple database</label>
+                            <input type="number" id="simpleDatabase" value={state.simpleDatabase} name="simpleDatabase" onChange={handleChange} onBlur={handleBlur}  /><br />
+                        </div>
+                        <div className="divider">
+                            <label className="l">Complex API</label>
+                            <input type="number" id="complexApi" value={state.complexApi} name="complexApi" onChange={handleChange} onBlur={handleBlur}  /><br />
+                        </div>
+                        <div className="divider" >
+                            <label className="l">Simple API</label>
+                            <input type="number" id="simpleApi" value={state.simpleApi} name="simpleApi" onChange={handleChange} onBlur={handleBlur}  /><br />
+                        </div>
+                        <div className="divider">
+                            <label className="l">Complex Report</label>
+                            <input type="number" id="complexReport" name="complexReport" value={state.complexReport} onChange={handleChange} onBlur={handleBlur}  /><br />
+                        </div>
+                        <div className="divider">
+                            <label className="l">Simple Report</label>
+                            <input type="number" id="simpleReport" name="simpleReport" value={state.simpleReport} onChange={handleChange} onBlur={handleBlur}  /><br />
+                        </div>
+                        <div className="divider">
+                            <label className="l">Total</label>
+                            <input type="number" id="total" name="total" value={state.total} disabled  />
+                        </div>
                     </form>
                     <div>
-                        <button onClick={() => defalut()}>Set to Default</button>
+                        <button className="sumbit" onClick={() => defalut()}>Reset to Default</button>
                     </div>
+                    </div>
+                    
     </>
 )
 }

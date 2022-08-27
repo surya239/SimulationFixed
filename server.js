@@ -683,9 +683,9 @@ app.get('/summary', async(req, res) => {
         const riskValue = await (await pool.query('SELECT * from riskrating')).rows[0]
         const subRisk = {
             requirement: contigencyCost[r.rows[0]['subcontractor']],
-            design:contigencyCost[d.rows[0]['subcontractor']],
+            design:contigencyCost[riskValue[d.rows[0]['subcontractor']]],
             coding:contigencyCost[riskValue[c.rows[0]['subcontractor']]],
-            testing:contigencyCost[t.rows[0]['subcontractor']],
+            testing:contigencyCost[riskValue[t.rows[0]['subcontractor']]],
             deployment:contigencyCost[riskValue[de.rows[0]['subcontractor']]]
         }
      
@@ -696,6 +696,7 @@ app.get('/summary', async(req, res) => {
             testing: rcost.testing * inhouse.testing / 100 + subcost.testing * subRisk.testing /100,
             deployment: rcost.deployment * inhouse.deployment / 100 + subcost.deployment * subRisk.deployment /100
         }
+        console.log(rcost, subcost, subRisk, inhouse)
         const {overhead, expectedprofit} = (await pool.query('SELECT * from bidsummary')).rows[0]
         
         const totalCotigency = Math.round(contigency.requirement + contigency.design + contigency.coding + contigency.testing + contigency.deployment)
@@ -856,6 +857,7 @@ app.get('/getbid/:email', async(req, res) => {
             testing: rcost.testing * inhouse.testing / 100 + subcost.testing * subRisk.testing /100,
             deployment: rcost.deployment * inhouse.deployment / 100 + subcost.deployment * subRisk.deployment /100
         }
+        console.log(contigency)
         const {overhead, expectedprofit} = (await pool.query('SELECT * from bidsummary')).rows[0]
         const totalCotigency = Math.round(contigency.requirement + contigency.design + contigency.coding + contigency.testing + contigency.deployment)
 

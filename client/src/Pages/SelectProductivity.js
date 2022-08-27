@@ -9,7 +9,7 @@ function SelectProductivity(params){
     const [effort, setEffort] = useState(0)
     const [state, setState] = useState(0)
     const {name} = params
-    const {states, value} = params
+    const {setUpdate, value} = params
   console.log(params)
     const change = async(e) => {
         try {
@@ -17,7 +17,7 @@ function SelectProductivity(params){
             const response = axios.post(`/changeproductivity/${name}`,{label})
             console.log((await response).data)
             setState(state+1)
-            states(state + 1)
+            setUpdate(state+1)
         } catch (error) {
             console.log(error)
         }
@@ -53,8 +53,8 @@ function SelectProductivity(params){
     }, [state, value])
     return(
         <>
-            <td>{defaultValue === ''?null:<Select options={option} onChange={e => change(e)} defaultValue={{id:0, label: defaultValue, value: defaultValue}} />}</td>
-            <td>{effort}</td>
+            <td className="secondrow">{defaultValue === ''?null:<Select options={option} onChange={e => change(e)} defaultValue={{id:0, label: defaultValue, value: defaultValue}} />}</td>
+            <td className="thirdrow">{effort}</td>
         </>
     )
 }

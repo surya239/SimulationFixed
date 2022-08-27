@@ -78,11 +78,18 @@ function Resource(){
     },[changeLifeCycle])
     return(
         <>
-        <BidPrice name={changestate} />
-            <div>
-                <h1>Calculate Resources</h1>
+        <div className="Dash">
+            <div className="n">
+            <h1>Calculate Resources</h1>
+
             </div>
             <div>
+        <BidPrice name={changestate}/>
+
+            </div>
+        </div>
+        <div className="effort" >
+        <div>
                 <h4>Select Life Cycle Effort Distribution</h4>
                 {changeLifeCycle.length === 0?null:<Select options={lifeCycle} defaultValue={{id:4, label:changeLifeCycle, value:changeLifeCycle}} onChange = {e => change(e, 'lifecycle')} />}
             </div>
@@ -95,7 +102,9 @@ function Resource(){
                 <h4>Productive  hours per day</h4>
                 {changeWH === 0 ?null:<Select options={WPM} defaultValue={{id:4, label:changeWH, value:changeWH}} onChange= {e => change(e,'phperday')}/>}
             </div>
-            <table>
+        </div>
+            
+            {/* <table>
                 <thead>
                     <tr>
                         <th></th>
@@ -134,7 +143,7 @@ function Resource(){
                         <R name='total' />
                     </tr>
                 </tbody>
-            </table>
+            </table> */}
         </>
     )
 }

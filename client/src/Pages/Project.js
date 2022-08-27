@@ -122,10 +122,64 @@ function Project(){
     }
     return(
         <>
-        <BidPrice name={changeState} />
-            <h3>Project Management</h3>
+        <div className="Dash">
+            <div className="n">
+            <h1>Project Management</h1>
+
+            </div>
             <div>
-                <table>
+        <BidPrice name={changeState}/>
+
+            </div>
+        </div>
+        <div className="effort">
+        <h3>Project Management</h3>
+
+        </div>
+            <div className="effort" >
+                <div>
+                <h4>Team Leader - Team Member Ratio</h4>
+                { defaultTeamRatio===''?null :<Select options={teamRatio} defaultValue={{id:6, label:defaultTeamRatio, value: defaultTeamRatio} } onChange={(e) => change(e,'teamleader', 'teamemberratio')} />}
+                </div>
+                <div>
+                    <h4>Team Lead Salary</h4>
+                    {defaultTeamLeadSalary === 0?null:<Select options={teamleadsalary} defaultValue={{id:0, label:defaultTeamLeadSalary, value: defaultTeamLeadSalary}} onChange = {(e) => changeValue(e,'teamleadsalary')} />}
+                </div>
+                <div>
+                    <h4>Project Manager - Team Lead Ratio</h4>
+                    {defaultTeamLeadRatio === ''?null:<Select options={teamLeadRatio} defaultValue={{id:5, label:defaultTeamLeadRatio, value: defaultTeamLeadRatio}} onChange={(e) => change(e,'projectmanager', 'teamleadratio')} />}
+                </div>
+                <div>
+                    <h4>PM Salary</h4>
+                    {defaultPmsalary === 0?null:<Select options={pmSalary} defaultValue={{id:4, label:defaultPmsalary, value:defaultPmsalary}} onChange = {(e) => changeValue(e, 'pmsalary')} />}
+                </div>
+                
+
+            </div>
+            <div className="effort" >
+                <div>
+                <h3>Heriustic</h3>
+
+                {defaultHeuristic === 0?null:<Select options={Heuristic} defaultValue={{id:1, label:defaultHeuristic, value:defaultHeuristic}} onChange={((e) => changeValue(e, 'heuristic'))}/>}
+
+                </div>
+                
+            </div>
+            <div className="effort" >
+                <h3>Onsite</h3>
+            </div>
+            <div className="effort">
+                <div>
+                    <h4>Onsite-Offshore Support Ratio</h4>
+                    {defaultonsite === ''?null:<Select options={onsite} defaultValue={{id:1, label: defaultonsite, id: defaultonsite}} onChange={(e) => change(e,'onsite','offshore')} />}
+                </div>
+                <div>
+                    <h4>Onsite Coordinator Salary</h4>
+                    {defaultOnsiteSalary === 0?null:<Select options={onsiteSalary} defaultValue={{id:0, label:defaultOnsiteSalary, value: defaultOnsiteSalary}} onChange={(e) => changeValue(e,'onsitesalary')} />}
+                </div>
+            </div>
+            <div>
+                {/* <table>
                     <thead>
                         <tr>
                             <th>Team Leader - Team Member Ratio</th>
@@ -191,7 +245,7 @@ function Project(){
                             <th>Onsite</th>
                         </tr>
                         <tr>
-                            <td>Onsite-Offshore Support Ratio</td>
+                            <td></td>
                             <td></td>
                             <td>Number of Onsite Coordinators</td>
                             <td>Onsite Coordinator Cost for 5 Months </td>
@@ -211,12 +265,13 @@ function Project(){
                             </td>
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
 
             </div>
             
         </>
     )
+
 }
 
 export default Project

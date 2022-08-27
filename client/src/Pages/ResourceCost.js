@@ -67,8 +67,18 @@ function ResourceCost(){
     }, [changeState])
     return(
         <>
-        <BidPrice name={changeState} />
+        <div className="Dash">
+            <div className="n">
+            <h1>Resource Cost</h1>
+
+            </div>
             <div>
+        <BidPrice name={changeState}/>
+
+            </div>
+        </div>
+        <div className="effort" >
+        <div  >
                 <h4>Permanent VS Temporary Load</h4>
                 {defaultpvst === ''? null :<Select options={pvslOption} onChange={(e) => change(e, 'pvst')} defaultValue={{id: 7, label: defaultpvst, value:defaultpvst}}/>}
             </div>
@@ -80,8 +90,10 @@ function ResourceCost(){
                 <h4>Temporary  Monthly Sal USD</h4>
                 {defaultTemporarySalary === 0?null: <Select options={temporary} onChange={(e) => change(e, 'temporarysalary') } defaultValue={{id:4, label: defaultTemporarySalary, value: defaultTemporarySalary}} />}
             </div>
+        </div>
+            
             <div>
-                <table>
+                {/* <table>
                     <tbody>
                         <tr>
                             <th>Permanent Staff</th>
@@ -118,7 +130,7 @@ function ResourceCost(){
                             <GettotalResource />
                         </tr>
                     </tbody>
-                </table>
+                </table> */}
             </div>
         </>
     )
