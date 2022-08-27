@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import Select from 'react-select'
 import Render from "./Render"
-
+import { useHistory } from "react-router-dom"
 function Dashboard(){
 const options = [{
     label:'Admin',
@@ -15,10 +15,12 @@ const options = [{
 }
 ]
 
+const history = useHistory();
+
 const [page,setPage] = useState('')
 
 const change = (a) =>{
-    setPage(a)
+    history.push(`/${a}`)
 }
 return(
     <>

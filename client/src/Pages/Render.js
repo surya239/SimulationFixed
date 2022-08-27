@@ -11,9 +11,10 @@ import Infra from './Infra'
 import SelectContigency from './SelectContigency'
 import BidPrice from './BidPrice'
 import Summary from './Summary'
-function Render(params){
-    const page = params.name
-    if(page === ''){
+import { useParams } from 'react-router-dom'
+function Render(){
+    const {name} = useParams();
+    if(name === '' || name === undefined){
         return (<>
         <div className='Dash'>
             <div className='n'>
@@ -30,7 +31,7 @@ function Render(params){
         )
     }
 
-    if(page === 'WBS'){
+    if(name === 'WBS'){
         return(
             <>
                 <WBS />
@@ -38,7 +39,7 @@ function Render(params){
             </> )
     }
 
-    else if(page === 'Effort'){
+    else if(name === 'Effort'){
         return(
             <>
                 <Effort />
@@ -47,7 +48,7 @@ function Render(params){
         )
     }
 
-    else if(page === 'Productivity'){
+    else if(name === 'Productivity'){
         return (
             <>
             <Effort />
@@ -55,29 +56,29 @@ function Render(params){
         )
     }
 
-    else if(page === 'Resources'){
+    else if(name === 'Resources'){
         return <Resource />
     }
 
-    else if(page === 'ResourceCost'){
+    else if(name === 'ResourceCost'){
         return <ResourceCost />
     }
-    else if(page === 'Project'){
+    else if(name === 'Project'){
         return <Project />
     }
-    else if(page === 'subContract'){
+    else if(name === 'subContract'){
         return <Subcontract />
     }
-    else if(page === 'Infra'){
+    else if(name === 'Infra'){
         return <Infra />
     }
     // // else if(page === 'costOfCapital'){
     // //     return <CostofCapital />
     // // }
-    else if(page === 'Contigency'){
+    else if(name === 'Contigency'){
         return <SelectContigency />
     }
-    else if(page === 'Summary'){
+    else if(name === 'Summary'){
         return <Summary />
     }
 }
