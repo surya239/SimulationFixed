@@ -54,7 +54,10 @@ ul{
   justify-content: space-between;
   /* background-color: rgb(172, 172, 255); */
   background-color: #86e5fa;
-
+/* position: fixed; */
+/* top: 0; */
+/* width: 100%; */
+/* overflow: hidden; */
   box-shadow: 5px 5px 5px rgba(0,0,0, 0.2);
 }
  
