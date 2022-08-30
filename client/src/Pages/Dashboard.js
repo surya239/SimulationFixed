@@ -20,7 +20,7 @@ const history = useHistory();
 const [page,setPage] = useState('')
 
 const change = (a) =>{
-    history.push(`/${a}`)
+    history.push(`/${a}/${false}`)
 }
 return(
     <>
@@ -34,7 +34,7 @@ return(
                     <li><button onClick={() => change('Effort')}>Effort</button></li>
                     <li><button onClick={() => change('Productivity')}>Productiviy</button></li>
                     <li><button onClick={() => change('Resources')} >Resources</button></li>
-                    <li><button onClick={() => change('ResourceCost')} >Resource Cost</button></li>
+                    {/* <li><button onClick={() => change('ResourceCost')} >Resource Cost</button></li> */}
                     <li><button onClick={() => change('Project')}>Project</button></li>
                     <li><button onClick={() => change('subContract')}>Sub contract</button></li>
                     <li><button onClick={() => change('Contigency')} >Contigency</button></li>

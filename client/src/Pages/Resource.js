@@ -4,6 +4,7 @@ import Select from "react-select";
 import Module from './Module'
 import R from "./R";
 import BidPrice from "./BidPrice";
+import ResourceCost from "./ResourceCost";
 function Resource(){
     const [changestate, setChangeState] = useState(0)
     const [lifeCycle, setLifeCycle] = useState([])
@@ -144,6 +145,7 @@ function Resource(){
                     </tr>
                 </tbody>
             </table> */}
+            <ResourceCost />
         </>
     )
 }

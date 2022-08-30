@@ -1,6 +1,7 @@
 import React,{useState, useEffect} from "react"
 import axios from "axios"
 import BidPrice from "./BidPrice"
+import wbs from '../Images/Doc1.jpg'
 function WBS(){
     const [changeState, SetChangeState] = useState(0)
     const [state, setState] = useState({
@@ -93,7 +94,13 @@ return(
 
             </div>
         </div>
+       
         <div className="wbs">
+            <div>
+            <img src={wbs} width='400px' height='500px' />
+
+            </div>
+            
         <form>
                         <div className="divider" >
                             <h3 className="l">Quantity</h3>

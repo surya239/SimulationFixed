@@ -10,7 +10,7 @@ function App() {
       <Router>
         <Switch>
           <Route path="/" exact><Dashboard /></Route>
-          <Route path="/:name"><Dashboard /></Route>
+          <Route path="/:name/:state"><Dashboard /></Route>
         </Switch>
       </Router>
     </>

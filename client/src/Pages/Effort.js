@@ -3,10 +3,14 @@ import Select from 'react-select'
 import axios from 'axios';
 import BidPrice from './BidPrice';
 import Productivity from './Productivity'
+import {useParams, useHistory} from 'react-router-dom'
 function Effort(){
+    const history = useHistory()
     const [option, setOption] = useState([])
     const [d, setDefaultValue] = useState(0)
     const [update, setUpdate] = useState(0)
+    const {name, state} = useParams();
+    const [changestate, setChange] = useState(state)
     const getValue = async() => {
         try {
             const result = axios.get(`/adjust/${'abc'}`)
@@ -37,7 +41,8 @@ function Effort(){
         const value = e.value
         try {
             const response = axios.post("/changeeffort",{value})
-            setUpdate(update + 1)
+            setChange(!changestate)
+            history.push(`/${name}/${changestate}`)
         } catch (error) {
             console.log(error)
         }

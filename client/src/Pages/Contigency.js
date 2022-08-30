@@ -38,6 +38,7 @@ function Contigency(params){
             const response = axios.post('/changecontigency', {label, name})
             console.log((await response).data)
             setState(state + 1)
+            window.location.reload(false);
         } catch (error) {
             console.log(error)
         }

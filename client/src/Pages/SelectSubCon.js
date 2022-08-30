@@ -38,6 +38,7 @@ function SelectSubCon(){
             const response = axios.post('/changesub', {value, c1})
             console.log((await response).data)
             setState(state + 1)
+            window.location.reload(false);
         } catch (error) {
             console.log(error)
         }

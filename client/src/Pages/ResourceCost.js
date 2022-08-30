@@ -58,6 +58,7 @@ function ResourceCost(){
             }
             const response = axios.post("/changeresourcecost",{coloumn, label})
             setChangeState(changeState+1)
+            window.location.reload(false);
         } catch (error) {
             console.log(error)
         }
@@ -67,16 +68,7 @@ function ResourceCost(){
     }, [changeState])
     return(
         <>
-        <div className="Dash">
-            <div className="n">
-            <h1>Resource Cost</h1>
-
-            </div>
-            <div>
-        <BidPrice name={changeState}/>
-
-            </div>
-        </div>
+        
         <div className="effort" >
         <div  >
                 <h4>Permanent VS Temporary Load</h4>

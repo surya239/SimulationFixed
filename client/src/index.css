@@ -95,6 +95,10 @@ h1{
   background-color: white;
   display: flex;
   padding: 10px;
+  
+}
+.wbs{
+  justify-content: space-between;
 }
 .wbs h3{
   margin-left: 0;
@@ -124,7 +128,7 @@ input{
 }
 
 .l{
-  width: 20%;
+  width: 40%;
 }
 
 .thead, .tbody{

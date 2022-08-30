@@ -1,13 +1,15 @@
 import React,{useEffect, useState} from "react";
 import axios from "axios";
 import Select from 'react-select'
-
+import {useHistory, useParams} from 'react-router-dom'
 
 function SelectProductivity(params){
     const [option, setOption] = useState([])
     const [defaultValue, setDefaultValue] = useState('')
     const [effort, setEffort] = useState(0)
     const [state, setState] = useState(0)
+    const values = useParams()
+    const history = useHistory()
     const {name} = params
     const {setUpdate, value} = params
   console.log(params)
@@ -18,6 +20,7 @@ function SelectProductivity(params){
             console.log((await response).data)
             setState(state+1)
             setUpdate(state+1)
+            window.location.reload(false);
         } catch (error) {
             console.log(error)
         }
