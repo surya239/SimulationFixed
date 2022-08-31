@@ -7,6 +7,7 @@ import ResourceCost from'./ResourceCost';
 import Project from './Project'
 import Subcontract from './Subcontract'
 import Infra from './Infra'
+import Costofcapital from './Costofcapital'
 // import CostofCapital from './CostofCapital'
 import SelectContigency from './SelectContigency'
 import BidPrice from './BidPrice'
@@ -72,9 +73,9 @@ function Render(){
     else if(name === 'Infra'){
         return <Infra />
     }
-    // // else if(page === 'costOfCapital'){
-    // //     return <CostofCapital />
-    // // }
+    else if(name === 'costOfCapital'){
+        return <Costofcapital />
+    }
     else if(name === 'Contigency'){
         return <SelectContigency />
     }
