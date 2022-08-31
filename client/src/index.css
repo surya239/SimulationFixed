@@ -54,9 +54,10 @@ ul{
   justify-content: space-between;
   /* background-color: rgb(172, 172, 255); */
   background-color: #86e5fa;
-/* position: fixed; */
+position: fixed;
+z-index: 10;
 /* top: 0; */
-/* width: 100%; */
+width: 80%;
 /* overflow: hidden; */
   box-shadow: 5px 5px 5px rgba(0,0,0, 0.2);
 }
@@ -95,6 +96,7 @@ h1{
   background-color: white;
   display: flex;
   padding: 10px;
+  margin-top: 90px;
   
 }
 .wbs{
